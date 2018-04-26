@@ -36,10 +36,15 @@ public class PanelParameters extends PanelAtributesValue {
     JComboBox comboBoxRecombinationMethods = new JComboBox(recombinationMethods);
     JTextField textFieldProbRecombination = new JTextField(PROB_RECOMBINATION, TEXT_FIELD_LENGHT);
     JTextField textFieldProbMutation = new JTextField(PROB_MUTATION, TEXT_FIELD_LENGHT);
+    String[] controllerTypes = {"Aleatório", "Ad-Hoc", "Uma cobra", "Duas cobras - homogéneo", "Duas cobras - heterogéneo"};
+    JComboBox comboBoxControllerTypes = new JComboBox(controllerTypes);
     //TODO - MORE PARAMETERS?
 
     public PanelParameters() {
         title = "Genetic algorithm parameters";
+
+        labels.add(new JLabel("Controlador: "));
+        valueComponents.add(comboBoxControllerTypes);
 
         labels.add(new JLabel("Seed: "));
         valueComponents.add(textFieldSeed);

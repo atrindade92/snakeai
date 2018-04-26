@@ -11,17 +11,16 @@ public abstract class SnakeAgent {
     protected List<Cell> tail = new ArrayList<>();
     protected int foodCaught = 0;
 
-
     public SnakeAgent(Cell cell, Color color) {
         this.cell = cell;
         if(cell != null){this.cell.setAgent(this);}
         this.color = color;
     }
 
-    public void act(Environment environment) {
+    public boolean act(Environment environment) {
         Perception perception = buildPerception(environment);
         Action action = decide(perception);
-        execute(action, environment);
+        return execute(action, environment);
     }
 
     protected Perception buildPerception(Environment environment) {
@@ -33,7 +32,7 @@ public abstract class SnakeAgent {
                 environment.getFoodCell());
     }
 
-    protected void execute(Action action, Environment environment)
+    protected boolean execute(Action action, Environment environment)
     {
         Cell nextCell = null;
 
@@ -51,7 +50,7 @@ public abstract class SnakeAgent {
             setCell(nextCell);
         }
         else
-            return;
+            return true;
 
         int headLine = this.cell.getLine();
         int headColumn = this.cell.getColumn();
@@ -76,6 +75,7 @@ public abstract class SnakeAgent {
                 this.tail.remove(this.tail.size() - 1);
             }
         }
+        return false;
     }
 
     protected abstract Action decide(Perception perception);

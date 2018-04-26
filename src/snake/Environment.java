@@ -1,6 +1,7 @@
 package snake;
 
 import snake.snakeAdhoc.SnakeAdhocAgent;
+import snake.snakeRandom.SnakeRandomAgent;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -47,8 +48,9 @@ public class Environment {
 
     // TODO MODIFY TO PLACE ADHOC OR AI SNAKE AGENTS
     private void placeAgents() {
-        //SnakeRandomAgent snakeRandomAgent = new SnakeRandomAgent(new Cell(random.nextInt(grid.length), random.nextInt(grid.length)), Color.GREEN);
+
         agents.clear();
+        //SnakeRandomAgent snakeRandomAgent = new SnakeRandomAgent(new Cell(random.nextInt(grid.length), random.nextInt(grid.length)),new Color(0,153,51));
         SnakeAdhocAgent snakeAdhocAgent = new SnakeAdhocAgent(new Cell(random.nextInt(grid.length), random.nextInt(grid.length)), new Color(0,153,51));
         //agents.add(snakeRandomAgent);
         agents.add(snakeAdhocAgent);
@@ -77,9 +79,12 @@ public class Environment {
     }
 
     public void simulate() {
+        boolean isAgentStucked = false;
         for (int i = 0; i < maxIterations; i++) {
+            if(isAgentStucked)
+                break;
             for (SnakeAgent agent : this.agents) {
-                agent.act(this);
+                isAgentStucked = agent.act(this);
                 fireUpdatedEnvironment();
             }
         }
