@@ -10,6 +10,7 @@ public abstract class SnakeAgent {
     protected Color color;
     protected List<Cell> tail = new ArrayList<>();
     protected int foodCaught = 0;
+    // TODO: isDead??
 
     public SnakeAgent(Cell cell, Color color) {
         this.cell = cell;

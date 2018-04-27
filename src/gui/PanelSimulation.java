@@ -2,6 +2,8 @@ package gui;
 
 import snake.Environment;
 import snake.EnvironmentListener;
+import snake.snakeAI.SnakeProblem;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -49,9 +51,16 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
     }
 
     public void jButtonSimulate_actionPerformed(ActionEvent e) {
+        SnakeProblem problem = mainFrame.getProblem();
 
-        environment = mainFrame.getProblem().getEnvironment();
-        environment.placeAgent(mainFrame.getControllerType());
+        if(problem == null) {
+            problem = SnakeProblem.buildDefaultProblem();
+            mainFrame.setProblem(problem);
+        }
+
+        environment = problem.getEnvironment();
+
+        environment.setAgent(mainFrame.getControllerType());
         environment.addEnvironmentListener(this);
 
         buildImage(environment);

@@ -26,6 +26,8 @@ public class PanelParameters extends PanelAtributesValue {
     public static final String PROB_RECOMBINATION = "0.7";
     public static final String PROB_MUTATION = "0.7";
 
+    private MainFrame mainFrame;
+
     JTextField textFieldSeed = new JTextField(SEED, TEXT_FIELD_LENGHT);
     JTextField textFieldN = new JTextField(POPULATION_SIZE, TEXT_FIELD_LENGHT);
     JTextField textFieldGenerations = new JTextField(GENERATIONS, TEXT_FIELD_LENGHT);
@@ -40,8 +42,10 @@ public class PanelParameters extends PanelAtributesValue {
     JComboBox comboBoxControllerTypes = new JComboBox(controllerTypes);
     //TODO - MORE PARAMETERS?
 
-    public PanelParameters() {
+    public PanelParameters(MainFrame mainFrame) {
         title = "Genetic algorithm parameters";
+
+        this.mainFrame = mainFrame;
 
         labels.add(new JLabel("Controller: "));
         valueComponents.add(comboBoxControllerTypes);
@@ -85,11 +89,11 @@ public class PanelParameters extends PanelAtributesValue {
     }
 
     public void actionPerformedControllerSelection(ActionEvent e){
-        int selectedIndex = comboBoxControllerTypes.getSelectedIndex();
-        if(selectedIndex == 3 || selectedIndex == 4)
-            toggleInputs(false);
-        else
-            toggleInputs(true);
+        final int selectedIndex = comboBoxControllerTypes.getSelectedIndex();
+        final boolean isControllerAdhocOrRandom = !(selectedIndex == 3 || selectedIndex == 4);
+
+        toggleInputs(isControllerAdhocOrRandom);
+        mainFrame.toggleDataSetButton(isControllerAdhocOrRandom);
     }
 
     private void toggleInputs(boolean value) {

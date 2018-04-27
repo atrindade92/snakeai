@@ -39,6 +39,10 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
                 maxIterations);
     }
 
+    public static SnakeProblem buildDefaultProblem(){
+        return new SnakeProblem(10, 500, 0, 10);
+    }
+
     @Override
     public SnakeIndividual getNewIndividual() {
         return new SnakeIndividual(this, GENOME_SIZE /*TODO?*/);

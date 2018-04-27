@@ -11,6 +11,7 @@ public class Environment {
     private SnakeAgent agent;
     private Food food;
     private final int maxIterations;
+    private String controller;
 
     public Environment(
             int size,
@@ -35,13 +36,18 @@ public class Environment {
 
     public void initialize(int seed) {
         random.setSeed(seed);
-
         initializeBoard();
         placeFood();
+        placeAgent();
     }
 
-    public void placeAgent(String controller){
-        this.agent = SnakeAgentFactory.buildSnakeAgent(controller, grid.length, grid.length);
+    public void placeAgent(){
+        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length);
+    }
+
+    public void setAgent(String controller){
+        this.controller = controller;
+        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length);
     }
 
     public void placeFood() {
@@ -64,6 +70,10 @@ public class Environment {
 
         //Remove old food
         grid[oldLine][oldColumn].setFood(null);
+    }
+
+    public void setAgent(SnakeAgent agent) {
+        this.agent = agent;
     }
 
     public void simulate() {
