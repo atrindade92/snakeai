@@ -52,14 +52,8 @@ public class SnakeRandomAgent extends SnakeAgent {
                     visitedDirections[3] = 1;
                     break;
                 default:
-                    System.out.println("ERROR: INVALID DIRECTION");
                     return null;
             }
-            System.out.println("Directions:");
-            System.out.println("N: " + visitedDirections[0]);
-            System.out.println("E: " + visitedDirections[1]);
-            System.out.println("S: " + visitedDirections[2]);
-            System.out.println("W: " + visitedDirections[3]);
         }while(!allDirectionsVisited(visitedDirections));
 
         return null;

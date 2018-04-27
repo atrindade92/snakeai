@@ -1,18 +1,14 @@
 package snake;
 
-import snake.snakeAdhoc.SnakeAdhocAgent;
-import snake.snakeRandom.SnakeRandomAgent;
-
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Environment {
 
     public Random random;
     private final Cell[][] grid;
-    private final List<SnakeAgent> agents; // TODO: a stora disse para fazer só 1 agente
+    private SnakeAgent agent;
     private Food food;
     private final int maxIterations;
 
@@ -25,7 +21,6 @@ public class Environment {
         this.grid = new Cell[size][size];
         initializeBoard();
 
-        this.agents = new ArrayList<>();
         this.random = new Random();
         this.food = new Food(new Cell(0,0));
     }
@@ -42,18 +37,11 @@ public class Environment {
         random.setSeed(seed);
 
         initializeBoard();
-        placeAgents();
         placeFood();
     }
 
-    // TODO MODIFY TO PLACE ADHOC OR AI SNAKE AGENTS
-    private void placeAgents() {
-
-        agents.clear();
-        //SnakeRandomAgent snakeRandomAgent = new SnakeRandomAgent(new Cell(random.nextInt(grid.length), random.nextInt(grid.length)),new Color(0,153,51));
-        SnakeAdhocAgent snakeAdhocAgent = new SnakeAdhocAgent(new Cell(random.nextInt(grid.length), random.nextInt(grid.length)), new Color(0,153,51));
-        //agents.add(snakeRandomAgent);
-        agents.add(snakeAdhocAgent);
+    public void placeAgent(String controller){
+        this.agent = SnakeAgentFactory.buildSnakeAgent(controller, grid.length, grid.length);
     }
 
     public void placeFood() {
@@ -83,10 +71,8 @@ public class Environment {
         for (int i = 0; i < maxIterations; i++) {
             if(isAgentStucked)
                 break;
-            for (SnakeAgent agent : this.agents) {
-                isAgentStucked = agent.act(this);
-                fireUpdatedEnvironment();
-            }
+            isAgentStucked = agent.act(this);
+            fireUpdatedEnvironment();
         }
     }
 

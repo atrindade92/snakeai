@@ -36,15 +36,16 @@ public class PanelParameters extends PanelAtributesValue {
     JComboBox comboBoxRecombinationMethods = new JComboBox(recombinationMethods);
     JTextField textFieldProbRecombination = new JTextField(PROB_RECOMBINATION, TEXT_FIELD_LENGHT);
     JTextField textFieldProbMutation = new JTextField(PROB_MUTATION, TEXT_FIELD_LENGHT);
-    String[] controllerTypes = {"Aleatório", "Ad-Hoc", "Uma cobra", "Duas cobras - homogéneo", "Duas cobras - heterogéneo"};
+    String[] controllerTypes = {"One snake", "Homogeneous", "Heterogeneous", "Random", "Ad-Hoc"};
     JComboBox comboBoxControllerTypes = new JComboBox(controllerTypes);
     //TODO - MORE PARAMETERS?
 
     public PanelParameters() {
         title = "Genetic algorithm parameters";
 
-        labels.add(new JLabel("Controlador: "));
+        labels.add(new JLabel("Controller: "));
         valueComponents.add(comboBoxControllerTypes);
+        comboBoxControllerTypes.addActionListener(new JComboBoxController_ActionAdapter(this));
 
         labels.add(new JLabel("Seed: "));
         valueComponents.add(textFieldSeed);
@@ -83,6 +84,25 @@ public class PanelParameters extends PanelAtributesValue {
         textFieldTournamentSize.setEnabled(comboBoxSelectionMethods.getSelectedIndex() == 0);
     }
 
+    public void actionPerformedControllerSelection(ActionEvent e){
+        int selectedIndex = comboBoxControllerTypes.getSelectedIndex();
+        if(selectedIndex == 3 || selectedIndex == 4)
+            toggleInputs(false);
+        else
+            toggleInputs(true);
+    }
+
+    private void toggleInputs(boolean value) {
+        textFieldSeed.setEnabled(value);
+        textFieldN.setEnabled(value);
+        textFieldGenerations.setEnabled(value);
+        comboBoxSelectionMethods.setEnabled(value);
+        textFieldTournamentSize.setEnabled(value);
+        comboBoxRecombinationMethods.setEnabled(value);
+        textFieldProbRecombination.setEnabled(value);
+        textFieldProbMutation.setEnabled(value);
+    }
+
     public SelectionMethod<SnakeIndividual, SnakeProblem> getSelectionMethod() {
         switch (comboBoxSelectionMethods.getSelectedIndex()) {
             case 0:
@@ -116,6 +136,23 @@ public class PanelParameters extends PanelAtributesValue {
         double mutationProbability = Double.parseDouble(textFieldProbMutation.getText());
         //TODO
         return new MutationMUTATION_NAME<>(mutationProbability/*TODO?*/);
+    }
+
+    public String getControllerType() {
+        return controllerTypes[comboBoxControllerTypes.getSelectedIndex()];
+    }
+}
+
+class JComboBoxController_ActionAdapter implements ActionListener{
+    final private PanelParameters adaptee;
+
+    public JComboBoxController_ActionAdapter(PanelParameters adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        adaptee.actionPerformedControllerSelection(e);
     }
 }
 

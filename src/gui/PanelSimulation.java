@@ -51,6 +51,7 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
     public void jButtonSimulate_actionPerformed(ActionEvent e) {
 
         environment = mainFrame.getProblem().getEnvironment();
+        environment.placeAgent(mainFrame.getControllerType());
         environment.addEnvironmentListener(this);
 
         buildImage(environment);

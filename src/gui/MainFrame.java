@@ -309,6 +309,10 @@ public class MainFrame extends JFrame implements GAListener {
         buttonRunExperiments.setEnabled(runExperiments);
         simulationPanel.setJButtonSimulateEnabled(runEnvironment);
     }
+
+    public String getControllerType() {
+        return panelParameters.getControllerType();
+    }
 }
 
 class PanelTextArea extends JPanel {
