@@ -20,12 +20,4 @@ public class Food {
     public Cell getCell() {
         return cell;
     }
-
-    public void setCell(Cell cell) {
-        if (this.cell != null)
-            this.cell.setFood(null);
-        this.cell = cell;
-        if (cell != null)
-            this.cell.setFood(this);
-    }
 }

@@ -20,23 +20,32 @@ public class Environment {
         this.maxIterations = maxIterations;
 
         this.grid = new Cell[size][size];
-        initializeBoard();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.grid[i][j] = new Cell(i, j);
+            }
+        }
 
         this.random = new Random();
-        this.food = new Food(new Cell(0,0));
+        //this.food = new Food(new Cell(0,0));
     }
 
-    private void initializeBoard(){
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid.length; j++) {
-                grid[i][j] = new Cell(i, j);
-            }
+    private void cleanBoard(){
+        if(agent != null) {
+            agent.getCell().setAgent(null);
+            agent.cleanTail();
+            agent = null;
+        }
+
+        if(food != null) {
+            food.getCell().setFood(null);
+            food = null;
         }
     }
 
     public void initialize(int seed) {
         random.setSeed(seed);
-        initializeBoard();
+        cleanBoard();
         placeFood();
         placeAgent();
     }
@@ -51,13 +60,9 @@ public class Environment {
     }
 
     public void placeFood() {
-        random = new Random();
         int l;
         int c;
 
-        Cell foodCell = food.getCell();
-        int oldLine = foodCell.getLine();
-        int oldColumn = foodCell.getColumn();
 
         //Só pode criar uma food se a celula estiver vazia
         do{
@@ -65,11 +70,7 @@ public class Environment {
             c = random.nextInt(getNumColumns());
         }while(grid[l][c].getColor() != Cell.COLOR);
 
-        food.setCell(new Cell(l, c));
-        grid[l][c].setFood(food);
-
-        //Remove old food
-        grid[oldLine][oldColumn].setFood(null);
+        food = new Food (grid[l][c]);
     }
 
     public void setAgent(SnakeAgent agent) {
@@ -122,16 +123,6 @@ public class Environment {
         return food.getCell();
     }
 
-    public Cell setTailPiece(Cell cell){
-        int line = cell.getLine();
-        int column = cell.getColumn();
-        grid[line][column].setTail(new Tail());
-        return grid[line][column];
-    }
-
-    public void removeTailPiece(Cell cell){
-        grid[cell.getLine()][cell.getColumn()].setTail(null);
-    }
 
     public int getNumLines() {
         return grid.length;

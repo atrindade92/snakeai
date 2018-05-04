@@ -14,7 +14,9 @@ public abstract class SnakeAgent {
 
     public SnakeAgent(Cell cell, Color color) {
         this.cell = cell;
-        if(cell != null){this.cell.setAgent(this);}
+        if (cell != null) {
+            this.cell.setAgent(this);
+        }
         this.color = color;
     }
 
@@ -33,8 +35,7 @@ public abstract class SnakeAgent {
                 environment.getFoodCell());
     }
 
-    protected boolean execute(Action action, Environment environment)
-    {
+    protected boolean execute(Action action, Environment environment) {
         Cell nextCell = null;
 
         if (action == Action.NORTH && cell.getLine() != 0) {
@@ -48,35 +49,33 @@ public abstract class SnakeAgent {
         }
 
         if (nextCell != null && !nextCell.hasAgent()) {
+            Cell lastCell = this.cell;
             setCell(nextCell);
-        }
-        else
+
+            //SE apanhou comida
+            if (nextCell.hasFood()) {
+                lastCell.setTail(new Tail());
+                this.tail.add(0, lastCell);
+
+                this.foodCaught++;
+                environment.placeFood();
+                nextCell.setFood(null);
+                //SE NAO apanhou comida
+            } else {
+                if (!this.tail.isEmpty()) {
+                    lastCell.setTail(new Tail());
+                    this.tail.add(0, lastCell);
+                    this.tail.get(this.tail.size() - 1).setTail(null);
+                    this.tail.remove(this.tail.size() - 1);
+                }
+            }
+
+            return false;
+
+        } else
             return true;
 
-        int headLine = this.cell.getLine();
-        int headColumn = this.cell.getColumn();
 
-        Cell newTailPiece = environment.setTailPiece(new Cell(headLine,headColumn));
-        this.tail.add(0,newTailPiece);
-
-
-        //SE apanhou comida
-        if(nextCell.hasFood()){
-            this.foodCaught++;
-            environment.placeFood();
-
-
-            //SE NAO apanhou comida
-        }else{
-            int lastTailPieceLine = this.tail.get(this.tail.size()-1).getLine();
-            int lastTailPieceColumn = this.tail.get(this.tail.size()-1).getColumn();
-
-            if(this.tail.size() > 1) {
-                environment.removeTailPiece(new Cell(lastTailPieceLine, lastTailPieceColumn));
-                this.tail.remove(this.tail.size() - 1);
-            }
-        }
-        return false;
     }
 
     protected abstract Action decide(Perception perception);
@@ -86,12 +85,23 @@ public abstract class SnakeAgent {
     }
 
     public void setCell(Cell newCell) {
-        if(this.cell != null){this.cell.setAgent(null);}
+        if (this.cell != null) {
+            this.cell.setAgent(null);
+        }
         this.cell = newCell;
-        if(newCell != null){newCell.setAgent(this);}
-    }    
-    
+        if (newCell != null) {
+            newCell.setAgent(this);
+        }
+    }
+
     public Color getColor() {
         return color;
+    }
+
+    public void cleanTail() {
+        for (Cell cell : tail) {
+            cell.setTail(null);
+        }
+        tail.clear();
     }
 }

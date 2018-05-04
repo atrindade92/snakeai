@@ -45,7 +45,9 @@ public class Cell {
 
     public Food getFood() { return food; }
 
-    public void setFood(Food food) { this.food = food; }
+    public void setFood(Food food) {
+        this.food = food;
+    }
 
     public boolean hasFood() { return food != null; }
 

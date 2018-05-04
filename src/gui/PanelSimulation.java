@@ -27,6 +27,7 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
     private Image image;
     JPanel environmentPanel = new JPanel();
     final JButton buttonSimulate = new JButton("Simulate");
+    private SwingWorker worker;
 
     public PanelSimulation(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -51,6 +52,14 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
     }
 
     public void jButtonSimulate_actionPerformed(ActionEvent e) {
+        if(worker != null)
+        {
+            worker.cancel(true);
+            environment.removeEnvironmentListener(this);
+            worker = null;
+            return ;
+        }
+
         SnakeProblem problem = mainFrame.getProblem();
 
         if(problem == null) {
@@ -67,16 +76,14 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
 
         final PanelSimulation simulationPanel = this;
 
-        SwingWorker worker = new SwingWorker<Void, Void>() {
+        worker = new SwingWorker<Void, Void>() {
             @Override
             public Void doInBackground() {
                 int environmentSimulations = mainFrame.getProblem().getNumEvironmentSimulations();
-
                 for (int i = 0; i < environmentSimulations; i++) {
                     environment.initialize(i);
                     environmentUpdated();
                     environment.simulate();
-                    System.out.println(i);
                 }
                 return null;
             }
