@@ -30,7 +30,7 @@ public class Environment {
         //this.food = new Food(new Cell(0,0));
     }
 
-    private void cleanBoard(){
+    public void cleanBoard(){
         if(agent != null) {
             agent.getCell().setAgent(null);
             agent.cleanTail();
@@ -63,7 +63,6 @@ public class Environment {
         int l;
         int c;
 
-
         //Só pode criar uma food se a celula estiver vazia
         do{
             l = random.nextInt(getNumLines());
@@ -91,7 +90,7 @@ public class Environment {
         return grid.length;
     }
 
-        public Cell getNorthCell(Cell cell) {
+    public Cell getNorthCell(Cell cell) {
         if (cell.getLine() > 0) {
             return grid[cell.getLine() - 1][cell.getColumn()];
         }
@@ -138,6 +137,10 @@ public class Environment {
 
     public Color getCellColor(int linha, int coluna) {
         return grid[linha][coluna].getColor();
+    }
+
+    public SnakeAgent getAgent() {
+        return agent;
     }
 
     //listeners

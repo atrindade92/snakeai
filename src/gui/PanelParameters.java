@@ -139,7 +139,7 @@ public class PanelParameters extends PanelAtributesValue {
     public Mutation<SnakeIndividual> getMutationMethod() {
         double mutationProbability = Double.parseDouble(textFieldProbMutation.getText());
         //TODO
-        return new MutationMUTATION_NAME<>(mutationProbability/*TODO?*/);
+        return new MutationUniform<>(mutationProbability/*TODO?*/);
     }
 
     public String getControllerType() {

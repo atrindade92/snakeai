@@ -55,6 +55,7 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
         if(worker != null)
         {
             worker.cancel(true);
+            environment.cleanBoard(); // Se clicar 2x em simulate, não limpa a snake
             environment.removeEnvironmentListener(this);
             worker = null;
             return ;

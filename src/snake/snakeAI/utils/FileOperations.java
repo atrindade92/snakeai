@@ -1,4 +1,4 @@
-package snake.snakeAI.ga.utils;
+package snake.snakeAI.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;

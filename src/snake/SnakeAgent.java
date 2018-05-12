@@ -10,6 +10,7 @@ public abstract class SnakeAgent {
     protected Color color;
     protected List<Cell> tail = new ArrayList<>();
     protected int foodCaught = 0;
+    protected  int numIterations = 0;
     // TODO: isDead??
 
     public SnakeAgent(Cell cell, Color color) {
@@ -51,6 +52,7 @@ public abstract class SnakeAgent {
         if (nextCell != null && !nextCell.hasAgent()) {
             Cell lastCell = this.cell;
             setCell(nextCell);
+            numIterations++;
 
             //SE apanhou comida
             if (nextCell.hasFood()) {
@@ -69,13 +71,9 @@ public abstract class SnakeAgent {
                     this.tail.remove(this.tail.size() - 1);
                 }
             }
-
             return false;
-
         } else
             return true;
-
-
     }
 
     protected abstract Action decide(Perception perception);
@@ -103,5 +101,13 @@ public abstract class SnakeAgent {
             cell.setTail(null);
         }
         tail.clear();
+    }
+
+    public int getNumFoodCaught() {
+        return foodCaught;
+    }
+
+    public int getNumIterationsSurvived() {
+        return numIterations;
     }
 }

@@ -63,7 +63,7 @@ public class SnakeExperimentsFactory extends ExperimentsFactory {
         double mutationProbability = Double.parseDouble(getParameterValue("Mutation probability"));
         if (getParameterValue("Mutation").equals("uniform_distribution")) {
             //TODO OTHER PARAMETERS TO YOUR MUTATION OPERATOR, IF THEY EXIST, ARE FETCHED HERE
-            mutation = new MutationMUTATION_NAME<>(mutationProbability /*TODO COMPLETE?*/);
+            mutation = new MutationUniform<>(mutationProbability /*TODO COMPLETE?*/);
         }
 
         //PROBLEM 

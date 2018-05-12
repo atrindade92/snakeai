@@ -2,7 +2,7 @@ package snake.snakeAI.ga;
 
 public abstract class RealVectorIndividual <P extends Problem, I extends RealVectorIndividual> extends Individual<P, I>{
 
-    private double genome[];
+    protected double genome[];
 
     public RealVectorIndividual(P problem, int size) {
         super(problem);

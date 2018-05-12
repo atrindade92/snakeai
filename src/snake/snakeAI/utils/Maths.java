@@ -1,4 +1,4 @@
-package snake.snakeAI.ga.utils;
+package snake.snakeAI.utils;
 
 import java.util.ArrayList;
 
@@ -26,5 +26,17 @@ public class Maths {
             sum += Math.pow(value.doubleValue() - mean, 2);
         }
         return Math.sqrt(1 / (double) array.size() * sum);
+    }
+
+    public static double sigmoid(double x){
+        return 1/(1 + Math.pow(Math.E, -x));
+    }
+
+    public static int roundedSigmoid(double x){
+        return (int) Math.round(sigmoid(x));
+    }
+
+    public static int sign(double x){
+        return x > 0 ? 1 : (x == 0 ? 0 : -1);
     }
 }

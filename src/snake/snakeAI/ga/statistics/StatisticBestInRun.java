@@ -28,7 +28,7 @@ public class StatisticBestInRun<I extends Individual, P extends Problem<I>> impl
 
     @Override
     public void experimentEnded(ExperimentEvent e) {
-        snake.snakeAI.ga.utils.FileOperations.appendToTextFile("statistic_best_per_experiment_fitness.xls", e.getSource() + "\t" + bestInExperiment.getFitness() + "\r\n");
-        snake.snakeAI.ga.utils.FileOperations.appendToTextFile("statistic_best_per_experiment.txt", "\r\n\r\n" + e.getSource() + "\r\n" + bestInExperiment);
+        snake.snakeAI.utils.FileOperations.appendToTextFile("statistic_best_per_experiment_fitness.xls", e.getSource() + "\t" + bestInExperiment.getFitness() + "\r\n");
+        snake.snakeAI.utils.FileOperations.appendToTextFile("statistic_best_per_experiment.txt", "\r\n\r\n" + e.getSource() + "\r\n" + bestInExperiment);
     }
 }

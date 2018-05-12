@@ -6,7 +6,7 @@ import snake.snakeAI.ga.GAListener;
 import snake.snakeAI.ga.GeneticAlgorithm;
 import snake.snakeAI.ga.Individual;
 import snake.snakeAI.ga.Problem;
-import snake.snakeAI.ga.utils.Maths;
+import snake.snakeAI.utils.Maths;
 
 public class StatisticBestAverage<E extends Individual, P extends Problem<E>> implements GAListener  {
     
@@ -33,6 +33,6 @@ public class StatisticBestAverage<E extends Individual, P extends Problem<E>> im
         double average = Maths.average(values);
         double sd = Maths.standardDeviation(values, average);
         
-        snake.snakeAI.ga.utils.FileOperations.appendToTextFile("statistic_average_fitness.xls", e.getSource() + "\t" + average + "\t" + sd + "\r\n");
+        snake.snakeAI.utils.FileOperations.appendToTextFile("statistic_average_fitness.xls", e.getSource() + "\t" + average + "\t" + sd + "\r\n");
     }    
 }
