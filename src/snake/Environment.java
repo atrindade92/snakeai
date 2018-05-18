@@ -1,21 +1,24 @@
 package snake;
 
+import snake.snakeAI.SnakeProblem;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Environment {
 
-    public Random random;
+    private Random random;
     private final Cell[][] grid;
     private SnakeAgent agent;
     private Food food;
     private final int maxIterations;
     private String controller;
+    private SnakeProblem problem;
 
     public Environment(
             int size,
-            int maxIterations) {
+            int maxIterations, SnakeProblem problem) {
 
         this.maxIterations = maxIterations;
 
@@ -27,6 +30,7 @@ public class Environment {
         }
 
         this.random = new Random();
+        this.problem = problem;
         //this.food = new Food(new Cell(0,0));
     }
 
@@ -51,12 +55,12 @@ public class Environment {
     }
 
     public void placeAgent(){
-        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length);
+        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length, problem);
     }
 
     public void setAgent(String controller){
         this.controller = controller;
-        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length);
+        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length, problem);
     }
 
     public void placeFood() {
@@ -141,6 +145,10 @@ public class Environment {
 
     public SnakeAgent getAgent() {
         return agent;
+    }
+
+    public SnakeProblem getProblem() {
+        return problem;
     }
 
     //listeners

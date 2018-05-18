@@ -70,7 +70,7 @@ public class SnakeAIAgent extends SnakeAgent {
     private int initializeWeightsArray(double w[][], double[] newWeights, int newWeightsIterator){
         for (int i = 0; i < w.length; i++) {
             for (int j = 0; j < w[0].length; j++) {
-                w[j][i] = newWeights[newWeightsIterator++];
+                w[i][j] = newWeights[newWeightsIterator++];
             }
         }
         return newWeightsIterator;

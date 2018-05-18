@@ -2,6 +2,7 @@ package snake.snakeAI;
 
 import snake.Environment;
 import snake.snakeAI.ga.Problem;
+import snake.snakeAI.nn.SnakeAIAgent;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +37,8 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
 
         environment = new Environment(
                 environmentSize,
-                maxIterations);
+                maxIterations, this);
+
     }
 
     public static SnakeProblem buildDefaultProblem(){
@@ -45,7 +47,7 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
 
     @Override
     public SnakeIndividual getNewIndividual() {
-        return new SnakeIndividual(this, GENOME_SIZE /*TODO?*/);
+        return new SnakeIndividual(this, GENOME_SIZE, (SnakeAIAgent) environment.getAgent());
     }
 
     public Environment getEnvironment() {
@@ -111,4 +113,19 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
         return sb.toString();
     }
 
+    public int getNumInputs() {
+        return numInputs;
+    }
+
+    public int getNumHiddenUnits() {
+        return numHiddenUnits;
+    }
+
+    public int getNumOutputs() {
+        return numOutputs;
+    }
+
+    public int getMaxIterations() {
+        return maxIterations;
+    }
 }

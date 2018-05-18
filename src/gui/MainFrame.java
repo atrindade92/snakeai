@@ -1,5 +1,6 @@
 package gui;
 
+import snake.Environment;
 import snake.snakeAI.SnakeIndividual;
 import snake.snakeAI.SnakeProblem;
 import snake.snakeAI.SnakeExperimentsFactory;
@@ -188,7 +189,9 @@ public class MainFrame extends JFrame implements GAListener {
             seriesBestIndividual.clear();
             seriesAverage.clear();
 
-            Random random = new Random(Integer.parseInt(panelParameters.textFieldSeed.getText()));
+            int seed = Integer.parseInt(panelParameters.textFieldSeed.getText());
+
+            Random random = new Random(seed);
             ga = new GeneticAlgorithm<>(
                     Integer.parseInt(panelParameters.textFieldN.getText()),
                     Integer.parseInt(panelParameters.textFieldGenerations.getText()),
@@ -198,6 +201,10 @@ public class MainFrame extends JFrame implements GAListener {
                     random);
 
             System.out.println(ga);
+
+            Environment environment = problem.getEnvironment();
+            environment.setAgent(getControllerType());
+            environment.initialize(seed);
 
             ga.addGAListener(this);
 

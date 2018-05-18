@@ -1,24 +1,29 @@
 package snake.snakeAI;
 
-import snake.SnakeAgent;
 import snake.snakeAI.ga.RealVectorIndividual;
+import snake.snakeAI.nn.SnakeAIAgent;
 
 public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeIndividual> {
 
-    public SnakeIndividual(SnakeProblem problem, int size /*TODO?*/) {
+    private SnakeAIAgent agent;
+
+    public SnakeIndividual(SnakeProblem problem, int size, SnakeAIAgent agent) {
         super(problem, size);
-        //TODO?
+        this.agent = agent;
+        this.agent.setWeights(genome);
     }
 
     public SnakeIndividual(SnakeIndividual original) {
         super(original);
-        //TODO
+        this.agent = original.getAgent();
     }
 
     @Override
     public double computeFitness() {
         final double STEPS_WEIGHT = 0.1, FOOD_CAUGHT_WEIGHT = 1000.0;
-        SnakeAgent agent = problem.getEnvironment().getAgent();
+        for (int i = 0; i < problem.getMaxIterations(); i++)
+            if(agent.act(problem.getEnvironment()))
+                break;
         fitness = agent.getNumIterationsSurvived() * STEPS_WEIGHT + agent.getNumFoodCaught() * FOOD_CAUGHT_WEIGHT;
         return fitness;
     }
@@ -54,5 +59,9 @@ public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeInd
     @Override
     public SnakeIndividual clone() {
         return new SnakeIndividual(this);
+    }
+
+    public SnakeAIAgent getAgent() {
+        return agent;
     }
 }
