@@ -51,7 +51,8 @@ public class Environment {
         random.setSeed(seed);
         cleanBoard();
         placeFood();
-        placeAgent();
+        if(!hasAgent())
+            placeAgent();
     }
 
     public void placeAgent(){
@@ -61,6 +62,10 @@ public class Environment {
     public void setAgent(String controller){
         this.controller = controller;
         this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length, problem);
+    }
+
+    public boolean hasAgent(){
+        return agent != null;
     }
 
     public void placeFood() {

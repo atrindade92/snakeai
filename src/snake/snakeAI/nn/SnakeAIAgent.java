@@ -99,10 +99,10 @@ public class SnakeAIAgent extends SnakeAgent {
             }
             tempOutput[i] = Maths.sigmoid(sum);
         }
-        scoreOutputs(tempOutput);
+        normalizeOutputs(tempOutput);
     }
 
-    private void scoreOutputs(double[] outputs){
+    private void normalizeOutputs(double[] outputs){
         double bestOutput = -2f;
         int index = -1;
         for (int i = 0; i < outputs.length; i++) {

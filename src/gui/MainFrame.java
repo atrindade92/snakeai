@@ -22,6 +22,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import snake.snakeAI.nn.SnakeAIAgent;
 
 public class MainFrame extends JFrame implements GAListener {
 
@@ -226,6 +227,10 @@ public class MainFrame extends JFrame implements GAListener {
                 @Override
                 public void done() {
                     manageButtons(true, true, false, true, experimentsFactory != null, true);
+                    if(bestInRun != null) {
+                        SnakeAIAgent agent = (SnakeAIAgent) environment.getAgent();
+                        agent.setWeights(bestInRun.getGenome());
+                    }
                 }
             };
 

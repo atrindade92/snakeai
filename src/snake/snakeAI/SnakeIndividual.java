@@ -10,7 +10,6 @@ public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeInd
     public SnakeIndividual(SnakeProblem problem, int size, SnakeAIAgent agent) {
         super(problem, size);
         this.agent = agent;
-        this.agent.setWeights(genome);
     }
 
     public SnakeIndividual(SnakeIndividual original) {
@@ -21,6 +20,7 @@ public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeInd
     @Override
     public double computeFitness() {
         final double STEPS_WEIGHT = 0.1, FOOD_CAUGHT_WEIGHT = 1000.0;
+        this.agent.setWeights(genome);
         for (int i = 0; i < problem.getMaxIterations(); i++)
             if(agent.act(problem.getEnvironment()))
                 break;
