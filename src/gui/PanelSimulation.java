@@ -3,6 +3,7 @@ package gui;
 import snake.Environment;
 import snake.EnvironmentListener;
 import snake.snakeAI.SnakeProblem;
+import snake.snakeAI.nn.SnakeAIAgent;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -89,6 +90,8 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
                 int environmentSimulations = mainFrame.getProblem().getNumEvironmentSimulations();
                 for (int i = 0; i < environmentSimulations; i++) {
                     environment.initialize(i);
+                    if(mainFrame.getControllerType())
+                        ((SnakeAIAgent)  environment.getAgent()).setWeights(mainFrame.getBestInRun().getGenome());
                     environmentUpdated();
                     environment.simulate();
                 }

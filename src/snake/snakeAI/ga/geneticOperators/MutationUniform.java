@@ -13,8 +13,11 @@ public class MutationUniform<I extends RealVectorIndividual> extends Mutation<I>
 
     @Override
     public void run(I ind) {
-        int geneIndex = GeneticAlgorithm.random.nextInt(ind.getNumGenes());
-        ind.setGene(geneIndex, GeneticAlgorithm.random.nextDouble()*2-1);
+        double generatedProbability = GeneticAlgorithm.random.nextDouble();
+        if(generatedProbability < probability) {
+            int geneIndex = GeneticAlgorithm.random.nextInt(ind.getNumGenes());
+            ind.setGene(geneIndex, GeneticAlgorithm.random.nextDouble() * 2 - 1);
+        }
     }
     
     @Override

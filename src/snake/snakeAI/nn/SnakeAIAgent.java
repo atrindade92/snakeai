@@ -97,31 +97,39 @@ public class SnakeAIAgent extends SnakeAgent {
             for (int j = 0; j < hiddenLayerSize+1; j++) {
                 sum += hiddenLayerOutput[j] * w2[j][i];
             }
-            tempOutput[i] = Maths.sigmoid(sum);
+            tempOutput[i] = sum;
+
         }
         normalizeOutputs(tempOutput);
     }
 
-    private void normalizeOutputs(double[] outputs){
-        double bestOutput = -2f;
+    // TODO: Meter dentro do ciclo for para melhorar performance
+    private void normalizeOutputs(double[] toutputs){
+        double bestOutput = Double.MIN_VALUE;
         int index = -1;
-        for (int i = 0; i < outputs.length; i++) {
-            if(outputs[i] > bestOutput) {
-                bestOutput = outputs[i];
+        for (int i = 0; i < toutputs.length; i++) {
+            output[i] = 0;
+            if(toutputs[i] > bestOutput) {
+                bestOutput = toutputs[i];
                 index = i;
             }
         }
-        for (int i = 0; i < output.length; i++) {
-            if(i == index)
-                continue;
-            output[i] = 0;
-        }
+
         output[index] = 1;
     }
 
     @Override
     protected Action decide(Perception perception) {
         final int TRUE = 1;
+
+        inputs[0]=perception.getN() != null && !perception.getN().hasTail() ? 1 : 0;
+        inputs[1]=perception.getE() != null && !perception.getE().hasTail() ? 1 : 0;
+        inputs[2]=perception.getS() != null && !perception.getS().hasTail() ? 1 : 0;
+        inputs[3]=perception.getW() != null && !perception.getW().hasTail() ? 1 : 0;
+        inputs[0]=perception.getN() != null && !perception.getN().hasTail() ? 1 : 0;
+        inputs[1]=perception.getE() != null && !perception.getE().hasTail() ? 1 : 0;
+        inputs[2]=perception.getS() != null && !perception.getS().hasTail() ? 1 : 0;
+        inputs[3]=perception.getW() != null && !perception.getW().hasTail() ? 1 : 0;
         forwardPropagation();
 
         if(output[0] == TRUE)

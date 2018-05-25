@@ -14,11 +14,21 @@ public class Environment {
     private Food food;
     private final int maxIterations;
     private String controller;
-    private SnakeProblem problem;
+    private int numInputs;
+    private int numHiddens;
+    private int numOutputs;
+
+    public Environment(int size, int maxIterations, int numInputs,
+                       int numHiddens, int numOutputs){
+        this(size, maxIterations);
+        this.numInputs = numInputs;
+        this.numHiddens = numHiddens;
+        this.numOutputs = numOutputs;
+    }
 
     public Environment(
             int size,
-            int maxIterations, SnakeProblem problem) {
+            int maxIterations) {
 
         this.maxIterations = maxIterations;
 
@@ -30,7 +40,6 @@ public class Environment {
         }
 
         this.random = new Random();
-        this.problem = problem;
         //this.food = new Food(new Cell(0,0));
     }
 
@@ -56,12 +65,12 @@ public class Environment {
     }
 
     public void placeAgent(){
-        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length, problem);
+        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length, this);
     }
 
     public void setAgent(String controller){
         this.controller = controller;
-        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length, problem);
+        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length, this);
     }
 
     public boolean hasAgent(){
@@ -87,12 +96,26 @@ public class Environment {
 
     public void simulate() {
         boolean isAgentStucked = false;
-        for (int i = 0; i < maxIterations; i++) {
+        int i;
+        for (i = 0; i < maxIterations; i++) {
             if(isAgentStucked)
                 break;
             isAgentStucked = agent.act(this);
             fireUpdatedEnvironment();
         }
+      // numMoves=i;
+    }
+
+    public int getNumInputs() {
+        return numInputs;
+    }
+
+    public int getNumHiddens() {
+        return numHiddens;
+    }
+
+    public int getNumOutputs() {
+        return numOutputs;
     }
 
     public int getSize() {
@@ -125,6 +148,10 @@ public class Environment {
             return grid[cell.getLine()][cell.getColumn() - 1];
         }
         return null;
+    }
+
+    public Random getRandom() {
+        return random;
     }
 
     public Cell getFoodCell(){

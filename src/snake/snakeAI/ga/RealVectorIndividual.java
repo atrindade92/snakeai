@@ -7,11 +7,16 @@ public abstract class RealVectorIndividual <P extends Problem, I extends RealVec
     public RealVectorIndividual(P problem, int size) {
         super(problem);
         genome = new double[size];
+        for (int i = 0; i <size ; i++) {
+            genome[i]=GeneticAlgorithm.random.nextDouble()*2-1;
+
+        }
     }
 
     public RealVectorIndividual(RealVectorIndividual<P, I> original) {
         super(original);
         genome = new double[original.getNumGenes()];
+        System.arraycopy(original.genome, 0, this.genome, 0, this.genome.length);
     }
     
     @Override
