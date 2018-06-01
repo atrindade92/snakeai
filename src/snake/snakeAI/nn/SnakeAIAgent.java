@@ -113,15 +113,18 @@ public class SnakeAIAgent extends SnakeAgent {
     protected Action decide(Perception perception) {
         final int TRUE = 1;
 
-        inputs[0]=perception.getN() != null && !perception.getN().hasTail() ? 0 : 1;
-        inputs[1]=perception.getE() != null && !perception.getE().hasTail() ? 0 : 1;
-        inputs[2]=perception.getS() != null && !perception.getS().hasTail() ? 0 : 1;
-        inputs[3]=perception.getW() != null && !perception.getW().hasTail() ? 0 : 1;
+        final Cell northCell = perception.getN(), eastCell = perception.getE(), southCell = perception.getS(),
+                westCell = perception.getW(), foodCell = perception.getF();
 
-        inputs[4]=foodOnN(perception.getF())  ? 0 : 1;
-        inputs[5]=foodOnE(perception.getF()) ? 0 : 1;
-        inputs[6]=foodOnS(perception.getF()) ? 0 : 1;
-        inputs[7]=foodOnW(perception.getF())  ? 0 : 1;
+        inputs[0]=northCell != null && !northCell.hasTail() ? 0 : 1;
+        inputs[1]=eastCell != null && !eastCell.hasTail() ? 0 : 1;
+        inputs[2]=southCell != null && !southCell.hasTail() ? 0 : 1;
+        inputs[3]=westCell != null && !westCell.hasTail() ? 0 : 1;
+
+        inputs[4]=foodOnN(foodCell) ? 0 : 1;
+        inputs[5]=foodOnE(foodCell) ? 0 : 1;
+        inputs[6]=foodOnS(foodCell) ? 0 : 1;
+        inputs[7]=foodOnW(foodCell) ? 0 : 1;
 
         forwardPropagation();
 

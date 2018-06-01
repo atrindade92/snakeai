@@ -101,6 +101,10 @@ public abstract class SnakeAgent {
         tail.clear();
     }
 
+    public void resetFoodCaught(){
+        this.foodCaught = 0;
+    }
+
     public int getNumFoodCaught() {
         return foodCaught;
     }

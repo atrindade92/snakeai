@@ -47,7 +47,7 @@ public class Environment {
         if(agent != null) {
             agent.getCell().setAgent(null);
             agent.cleanTail();
-            agent = null;
+            agent.resetFoodCaught();
         }
 
         if(food != null) {
@@ -61,16 +61,22 @@ public class Environment {
         cleanBoard();
         placeFood();
         if(!hasAgent())
+            createAgent();
+        else
             placeAgent();
     }
 
     public void placeAgent(){
-        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length, this);
+        agent.setCell(getCellAtRandomLocation());
+    }
+
+    public void createAgent(){
+        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, this);
     }
 
     public void setAgent(String controller){
         this.controller = controller;
-        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, grid.length, grid.length, this);
+        createAgent();
     }
 
     public boolean hasAgent(){
@@ -181,6 +187,10 @@ public class Environment {
 
     public SnakeAgent getAgent() {
         return agent;
+    }
+
+    public Cell getCellAtRandomLocation(){
+        return new Cell(random.nextInt(grid.length), random.nextInt(grid[0].length));
     }
 
     //listeners

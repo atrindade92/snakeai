@@ -11,10 +11,8 @@ import java.security.InvalidParameterException;
 public class SnakeAgentFactory {
 
     private static Environment myEnvironment;
-    private static int thisMaxGridXSize;
-    private static int thisMaxGridYSize;
 
-    public static SnakeAgent buildSnakeAgent(String agentType, int maxGridXSize, int maxGridYSize, Environment environment){
+    public static SnakeAgent buildSnakeAgent(String agentType, Environment environment){
         if(agentType == null)
             throw new InvalidParameterException("Controller cannot be null.");
 
@@ -23,23 +21,16 @@ public class SnakeAgentFactory {
 
         final Color agentColor = new Color(0,153,51);
         myEnvironment = environment;
-        thisMaxGridXSize = maxGridXSize;
-        thisMaxGridYSize = maxGridYSize;
 
         switch (agentType.toUpperCase()) {
             case "RANDOM":
-                return new SnakeRandomAgent(getCellAtRandomLocation(), agentColor);
+                return new SnakeRandomAgent(environment.getCellAtRandomLocation(), agentColor);
             case "AD-HOC":
-                return new SnakeAdhocAgent(getCellAtRandomLocation(), agentColor);
+                return new SnakeAdhocAgent(environment.getCellAtRandomLocation(), agentColor);
             case "ONE SNAKE":
-                return new SnakeAIAgent(getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
+                return new SnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
             default:
                 throw new InvalidAgentException("Agent name does not exist in the current context.");
         }
     }
-
-    private static Cell getCellAtRandomLocation(){
-        return new Cell(myEnvironment.getRandom().nextInt(thisMaxGridXSize), myEnvironment.getRandom().nextInt(thisMaxGridYSize));
-    }
-
 }
