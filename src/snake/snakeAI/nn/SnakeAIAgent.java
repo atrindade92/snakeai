@@ -91,30 +91,21 @@ public class SnakeAIAgent extends SnakeAgent {
             hiddenLayerOutput[i] = Maths.sigmoid(sum);
         }
 
-        double[] tempOutput = new double[outputLayerSize];
+        int index = 0;
+        double bestOutput = Double.MIN_VALUE;
+
         for (int i = 0; i < outputLayerSize; i++) {
             sum = 0;
             for (int j = 0; j < hiddenLayerSize+1; j++) {
                 sum += hiddenLayerOutput[j] * w2[j][i];
             }
-            tempOutput[i] = sum;
-
-        }
-        normalizeOutputs(tempOutput);
-    }
-
-    // TODO: Meter dentro do ciclo for para melhorar performance
-    private void normalizeOutputs(double[] toutputs){
-        double bestOutput = Double.MIN_VALUE;
-        int index = -1;
-        for (int i = 0; i < toutputs.length; i++) {
-            output[i] = 0;
-            if(toutputs[i] > bestOutput) {
-                bestOutput = toutputs[i];
+            if(sum > bestOutput) {
+                bestOutput = sum;
                 index = i;
             }
-        }
+            output[i] = 0;
 
+        }
         output[index] = 1;
     }
 
@@ -122,14 +113,16 @@ public class SnakeAIAgent extends SnakeAgent {
     protected Action decide(Perception perception) {
         final int TRUE = 1;
 
-        inputs[0]=perception.getN() != null && !perception.getN().hasTail() ? 1 : 0;
-        inputs[1]=perception.getE() != null && !perception.getE().hasTail() ? 1 : 0;
-        inputs[2]=perception.getS() != null && !perception.getS().hasTail() ? 1 : 0;
-        inputs[3]=perception.getW() != null && !perception.getW().hasTail() ? 1 : 0;
-        inputs[0]=perception.getN() != null && !perception.getN().hasTail() ? 1 : 0;
-        inputs[1]=perception.getE() != null && !perception.getE().hasTail() ? 1 : 0;
-        inputs[2]=perception.getS() != null && !perception.getS().hasTail() ? 1 : 0;
-        inputs[3]=perception.getW() != null && !perception.getW().hasTail() ? 1 : 0;
+        inputs[0]=perception.getN() != null && !perception.getN().hasTail() ? 0 : 1;
+        inputs[1]=perception.getE() != null && !perception.getE().hasTail() ? 0 : 1;
+        inputs[2]=perception.getS() != null && !perception.getS().hasTail() ? 0 : 1;
+        inputs[3]=perception.getW() != null && !perception.getW().hasTail() ? 0 : 1;
+
+        inputs[4]=foodOnN(perception.getF())  ? 0 : 1;
+        inputs[5]=foodOnE(perception.getF()) ? 0 : 1;
+        inputs[6]=foodOnS(perception.getF()) ? 0 : 1;
+        inputs[7]=foodOnW(perception.getF())  ? 0 : 1;
+
         forwardPropagation();
 
         if(output[0] == TRUE)

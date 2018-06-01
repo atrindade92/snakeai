@@ -96,6 +96,11 @@ public class PanelParameters extends PanelAtributesValue {
         mainFrame.toggleDataSetButton(isControllerAdhocOrRandom);
     }
 
+    public boolean isAIController(){
+        final int selectedIndex = comboBoxControllerTypes.getSelectedIndex();
+        return selectedIndex == 0 || selectedIndex == 1 || selectedIndex == 2;
+    }
+
     private void toggleInputs(boolean value) {
         textFieldSeed.setEnabled(value);
         textFieldN.setEnabled(value);

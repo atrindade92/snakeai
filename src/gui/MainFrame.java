@@ -168,6 +168,7 @@ public class MainFrame extends JFrame implements GAListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File dataSet = fc.getSelectedFile();
                 problem = SnakeProblem.buildProblemFromFile(dataSet);
+                problem.getEnvironment().setAgent(getControllerType());
                 problemPanel.textArea.setText(problem.toString());
                 problemPanel.textArea.setCaretPosition(0);
                 buttonRun.setEnabled(true);
@@ -203,9 +204,9 @@ public class MainFrame extends JFrame implements GAListener {
 
             System.out.println(ga);
 
-            Environment environment = problem.getEnvironment();
-            environment.setAgent(getControllerType());
-            environment.initialize(seed);
+          //  Environment environment = problem.getEnvironment();
+            //environment.setAgent(getControllerType());
+//            environment.initialize(seed);
 
             ga.addGAListener(this);
 
@@ -215,7 +216,6 @@ public class MainFrame extends JFrame implements GAListener {
                 @Override
                 public Void doInBackground() {
                     try {
-
                         bestInRun = ga.run(problem);
 
                     } catch (Exception e) {
@@ -227,10 +227,10 @@ public class MainFrame extends JFrame implements GAListener {
                 @Override
                 public void done() {
                     manageButtons(true, true, false, true, experimentsFactory != null, true);
-                    if(bestInRun != null) {
-                        SnakeAIAgent agent = (SnakeAIAgent) environment.getAgent();
-                        agent.setWeights(bestInRun.getGenome());
-                    }
+//                    if(bestInRun != null) {
+//                        SnakeAIAgent agent = (SnakeAIAgent) problem.getEnvironment().getAgent();
+//                        agent.setWeights(bestInRun.getGenome());
+//                    }
                 }
             };
 
@@ -332,6 +332,10 @@ public class MainFrame extends JFrame implements GAListener {
 
     public String getControllerType() {
         return panelParameters.getControllerType();
+    }
+
+    public boolean isAIAgent(){
+        return panelParameters.isAIController();
     }
 }
 

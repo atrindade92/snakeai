@@ -54,20 +54,4 @@ public class SnakeAdhocAgent extends SnakeAgent {
 
         return null;
     }
-
-    private boolean foodOnN(Cell foodCell){
-        return (foodCell.getLine() < this.cell.getLine());
-    }
-
-    private boolean foodOnE(Cell foodCell){
-        return (foodCell.getColumn() > this.cell.getColumn());
-    }
-
-    private boolean foodOnS(Cell foodCell){
-        return (foodCell.getLine() > this.cell.getLine());
-    }
-
-    private boolean foodOnW(Cell foodCell){
-        return (foodCell.getColumn() < this.cell.getColumn());
-    }
 }

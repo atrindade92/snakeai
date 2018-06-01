@@ -1,7 +1,5 @@
 package snake;
 
-import snake.snakeAI.SnakeProblem;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,6 +15,7 @@ public class Environment {
     private int numInputs;
     private int numHiddens;
     private int numOutputs;
+    private int numMoves = 0;
 
     public Environment(int size, int maxIterations, int numInputs,
                        int numHiddens, int numOutputs){
@@ -44,6 +43,7 @@ public class Environment {
     }
 
     public void cleanBoard(){
+        numMoves = 0;
         if(agent != null) {
             agent.getCell().setAgent(null);
             agent.cleanTail();
@@ -103,7 +103,7 @@ public class Environment {
             isAgentStucked = agent.act(this);
             fireUpdatedEnvironment();
         }
-      // numMoves=i;
+       numMoves=i;
     }
 
     public int getNumInputs() {
@@ -120,6 +120,10 @@ public class Environment {
 
     public int getSize() {
         return grid.length;
+    }
+
+    public int getNumMoves(){
+        return numMoves;
     }
 
     public Cell getNorthCell(Cell cell) {
@@ -177,10 +181,6 @@ public class Environment {
 
     public SnakeAgent getAgent() {
         return agent;
-    }
-
-    public SnakeProblem getProblem() {
-        return problem;
     }
 
     //listeners

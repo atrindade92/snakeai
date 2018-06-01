@@ -1,19 +1,16 @@
 package snake;
 
 import exceptions.InvalidAgentException;
-import snake.snakeAI.SnakeProblem;
-import snake.snakeAI.ga.GeneticAlgorithm;
 import snake.snakeAI.nn.SnakeAIAgent;
 import snake.snakeAdhoc.SnakeAdhocAgent;
 import snake.snakeRandom.SnakeRandomAgent;
 
 import java.awt.*;
 import java.security.InvalidParameterException;
-import java.util.Random;
 
 public class SnakeAgentFactory {
 
-    private static Environment environment;
+    private static Environment myEnvironment;
     private static int thisMaxGridXSize;
     private static int thisMaxGridYSize;
 
@@ -25,7 +22,7 @@ public class SnakeAgentFactory {
             throw new InvalidAgentException("Agent name must not be empty.");
 
         final Color agentColor = new Color(0,153,51);
-        this.environment = environment;
+        myEnvironment = environment;
         thisMaxGridXSize = maxGridXSize;
         thisMaxGridYSize = maxGridYSize;
 
@@ -42,7 +39,7 @@ public class SnakeAgentFactory {
     }
 
     private static Cell getCellAtRandomLocation(){
-        return new Cell(environment.getRandom().nextInt(thisMaxGridXSize), environment.getRandom().nextInt(thisMaxGridYSize));
+        return new Cell(myEnvironment.getRandom().nextInt(thisMaxGridXSize), myEnvironment.getRandom().nextInt(thisMaxGridYSize));
     }
 
 }

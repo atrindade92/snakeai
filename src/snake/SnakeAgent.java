@@ -10,7 +10,6 @@ public abstract class SnakeAgent {
     protected Color color;
     protected List<Cell> tail = new ArrayList<>();
     protected int foodCaught = 0;
-    protected  int numIterations = 0;
     // TODO: isDead??
 
     public SnakeAgent(Cell cell, Color color) {
@@ -49,10 +48,9 @@ public abstract class SnakeAgent {
             nextCell = environment.getEastCell(cell);
         }
 
-        if (nextCell != null && !nextCell.hasAgent()) {
+        if (nextCell != null && !nextCell.hasAgent() && !nextCell.hasTail()) {
             Cell lastCell = this.cell;
             setCell(nextCell);
-            numIterations++;
 
             //SE apanhou comida
             if (nextCell.hasFood()) {
@@ -107,7 +105,19 @@ public abstract class SnakeAgent {
         return foodCaught;
     }
 
-    public int getNumIterationsSurvived() {
-        return numIterations;
+    protected boolean foodOnN(Cell foodCell){
+        return (foodCell.getLine() < this.cell.getLine());
+    }
+
+    protected boolean foodOnE(Cell foodCell){
+        return (foodCell.getColumn() > this.cell.getColumn());
+    }
+
+    protected boolean foodOnS(Cell foodCell){
+        return (foodCell.getLine() > this.cell.getLine());
+    }
+
+    protected boolean foodOnW(Cell foodCell){
+        return (foodCell.getColumn() < this.cell.getColumn());
     }
 }

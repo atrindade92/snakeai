@@ -5,7 +5,7 @@ import snake.snakeAI.ga.RealVectorIndividual;
 
 public class MutationUniform<I extends RealVectorIndividual> extends Mutation<I> {
 
-   
+
     public MutationUniform(double probability /*TODO?*/) {
         super(probability);
         // TODO
@@ -13,15 +13,17 @@ public class MutationUniform<I extends RealVectorIndividual> extends Mutation<I>
 
     @Override
     public void run(I ind) {
-        double generatedProbability = GeneticAlgorithm.random.nextDouble();
-        if(generatedProbability < probability) {
-            int geneIndex = GeneticAlgorithm.random.nextInt(ind.getNumGenes());
-            ind.setGene(geneIndex, GeneticAlgorithm.random.nextDouble() * 2 - 1);
+
+        for (int i = 0; i < ind.getNumGenes(); i++) {
+
+            if (GeneticAlgorithm.random.nextDouble() < probability) {
+                ind.setGene(i, GeneticAlgorithm.random.nextDouble() * 2 - 1);
+            }
         }
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return "Uniform distribution mutation (" + probability /* + TODO?*/ + ")";
     }
 }
