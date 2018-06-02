@@ -1,26 +1,26 @@
 Runs: 10
 
-Population size: 1000
+Population size: 50
 
-Max generations: 1500
+Max generations: 1000
 
 //--------------------------------
 
 Selection: tournament
 
-Tournament size: 2
+Tournament size: 10
 
 //--------------------------------
 
 Recombination: one_cut
 
-Recombination probability: 0.7
+Recombination probability: 0.85
 
 //--------------------------------
 
 Mutation: uniform_distribution
 
-Mutation probability: 0.1
+Mutation probability: 0.01
 
 Delta: 0.02
 

@@ -60,10 +60,7 @@ public class Environment {
         random.setSeed(seed);
         cleanBoard();
         placeFood();
-        if(!hasAgent())
-            createAgent();
-        else
-            placeAgent();
+        placeAgent();
     }
 
     public void placeAgent(){
@@ -191,6 +188,10 @@ public class Environment {
 
     public Cell getCellAtRandomLocation(){
         return new Cell(random.nextInt(grid.length), random.nextInt(grid[0].length));
+    }
+
+    public String getController() {
+        return controller;
     }
 
     //listeners

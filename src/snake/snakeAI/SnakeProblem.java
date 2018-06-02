@@ -2,7 +2,6 @@ package snake.snakeAI;
 
 import snake.Environment;
 import snake.snakeAI.ga.Problem;
-import snake.snakeAI.nn.SnakeAIAgent;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SnakeProblem implements Problem<SnakeIndividual> {
-    private static final int NUM_NN_INPUTS = 9;
+    private static final int NUM_NN_INPUTS = 13;
     private static final int NUM_NN_OUTPUTS = 4;
     private final int GENOME_SIZE;
 
@@ -20,14 +19,14 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
     final private int numHiddenUnits;
     final public int numOutputs;
     final private int numEnvironmentRuns;
-
     final private Environment environment;
 
     public SnakeProblem(
             int environmentSize,
             int maxIterations,
             int numHiddenUnits,
-            int numEnvironmentRuns) {
+            int numEnvironmentRuns,
+            String snakeController) {
         this.environmentSize = environmentSize;
         this.maxIterations = maxIterations;
         this.numInputs = NUM_NN_INPUTS;
@@ -41,10 +40,11 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
                 environmentSize,
                 maxIterations, numInputs, numHiddenUnits, numOutputs);
 
+        environment.setAgent(snakeController);
     }
 
-    public static SnakeProblem buildDefaultProblem(){
-        return new SnakeProblem(10, 500, 0, 10);
+    public static SnakeProblem buildDefaultProblem(String controller){
+        return new SnakeProblem(10, 500, 0, 10, controller);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
     }
 
     // MODIFY IF YOU DEFINE OTHER PARAMETERS
-    public static SnakeProblem buildProblemFromFile(File file) throws IOException {
+    public static SnakeProblem buildProblemFromFile(File file, String controller) throws IOException {
         java.util.Scanner f = new java.util.Scanner(file);
 
         List<String> lines = new LinkedList<>();
@@ -88,7 +88,8 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
                 environmentSize,
                 maxIterations,
                 numHiddenUnits,
-                numEnvironmentRuns);
+                numEnvironmentRuns,
+                controller);
     }
 
     // MODIFY IF YOU DEFINE OTHER PARAMETERS

@@ -116,15 +116,20 @@ public class SnakeAIAgent extends SnakeAgent {
         final Cell northCell = perception.getN(), eastCell = perception.getE(), southCell = perception.getS(),
                 westCell = perception.getW(), foodCell = perception.getF();
 
-        inputs[0]=northCell != null && !northCell.hasTail() ? 0 : 1;
-        inputs[1]=eastCell != null && !eastCell.hasTail() ? 0 : 1;
-        inputs[2]=southCell != null && !southCell.hasTail() ? 0 : 1;
-        inputs[3]=westCell != null && !westCell.hasTail() ? 0 : 1;
+        inputs[0]=northCell != null ? 0 : 1;
+        inputs[1]=eastCell != null ? 0 : 1;
+        inputs[2]=southCell != null ? 0 : 1;
+        inputs[3]=westCell != null ? 0 : 1;
 
         inputs[4]=foodOnN(foodCell) ? 0 : 1;
         inputs[5]=foodOnE(foodCell) ? 0 : 1;
         inputs[6]=foodOnS(foodCell) ? 0 : 1;
         inputs[7]=foodOnW(foodCell) ? 0 : 1;
+
+        inputs[8]=northCell != null && !northCell.hasTail() ? 0 : 1;
+        inputs[9]=eastCell != null && !eastCell.hasTail() ? 0 : 1;
+        inputs[10]=southCell != null && !southCell.hasTail() ? 0 : 1;
+        inputs[11]=westCell != null && !westCell.hasTail() ? 0 : 1;
 
         forwardPropagation();
 

@@ -65,7 +65,7 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
         SnakeProblem problem = mainFrame.getProblem();
 
         if(problem == null) {
-            problem = SnakeProblem.buildDefaultProblem();
+            problem = SnakeProblem.buildDefaultProblem(mainFrame.getControllerType());
             mainFrame.setProblem(problem);
         }
 
@@ -76,6 +76,10 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
 //            environment.cleanBoard();
 //        else
 //            environment.setAgent(mainFrame.getControllerType());
+
+        final String mainFrameSnakeController = mainFrame.getControllerType();
+        if(!environment.getController().equals(mainFrameSnakeController))
+            environment.setAgent(mainFrameSnakeController);
 
         if(!environment.hasAgent())
             environment.setAgent(mainFrame.getControllerType());

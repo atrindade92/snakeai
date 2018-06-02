@@ -1,6 +1,5 @@
 package gui;
 
-import snake.Environment;
 import snake.snakeAI.SnakeIndividual;
 import snake.snakeAI.SnakeProblem;
 import snake.snakeAI.SnakeExperimentsFactory;
@@ -22,7 +21,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import snake.snakeAI.nn.SnakeAIAgent;
 
 public class MainFrame extends JFrame implements GAListener {
 
@@ -167,8 +165,7 @@ public class MainFrame extends JFrame implements GAListener {
         try {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File dataSet = fc.getSelectedFile();
-                problem = SnakeProblem.buildProblemFromFile(dataSet);
-                problem.getEnvironment().setAgent(getControllerType());
+                problem = SnakeProblem.buildProblemFromFile(dataSet, getControllerType());
                 problemPanel.textArea.setText(problem.toString());
                 problemPanel.textArea.setCaretPosition(0);
                 buttonRun.setEnabled(true);
@@ -204,10 +201,6 @@ public class MainFrame extends JFrame implements GAListener {
 
             System.out.println(ga);
 
-          //  Environment environment = problem.getEnvironment();
-            //environment.setAgent(getControllerType());
-//            environment.initialize(seed);
-
             ga.addGAListener(this);
 
             manageButtons(false, false, true, false, false, false);
@@ -217,7 +210,6 @@ public class MainFrame extends JFrame implements GAListener {
                 public Void doInBackground() {
                     try {
                         bestInRun = ga.run(problem);
-
                     } catch (Exception e) {
                         e.printStackTrace(System.err);
                     }
@@ -227,10 +219,6 @@ public class MainFrame extends JFrame implements GAListener {
                 @Override
                 public void done() {
                     manageButtons(true, true, false, true, experimentsFactory != null, true);
-//                    if(bestInRun != null) {
-//                        SnakeAIAgent agent = (SnakeAIAgent) problem.getEnvironment().getAgent();
-//                        agent.setWeights(bestInRun.getGenome());
-//                    }
                 }
             };
 
@@ -266,7 +254,7 @@ public class MainFrame extends JFrame implements GAListener {
 
         try {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                experimentsFactory = new SnakeExperimentsFactory(fc.getSelectedFile());
+                experimentsFactory = new SnakeExperimentsFactory(fc.getSelectedFile(), getControllerType());
                 manageButtons(true, problem != null, false, true, true, false);
             }
         } catch (IOException e1) {
@@ -285,6 +273,7 @@ public class MainFrame extends JFrame implements GAListener {
             @Override
             public Void doInBackground() {
                 try {
+                    long initialTime = System.currentTimeMillis();
                     while (experimentsFactory.hasMoreExperiments()) {
                         try {
 
@@ -295,6 +284,7 @@ public class MainFrame extends JFrame implements GAListener {
                             e1.printStackTrace(System.err);
                         }
                     }
+                    System.out.println("Time: " + (System.currentTimeMillis() - initialTime)/1000);
                 } catch (Exception e) {
                     e.printStackTrace(System.err);
                 }

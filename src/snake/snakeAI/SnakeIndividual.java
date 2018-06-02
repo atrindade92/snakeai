@@ -32,12 +32,14 @@ public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeInd
             environment.initialize(i);
             agent = (SnakeAIAgent) environment.getAgent();
             agent.setWeights(genome);
+
             environment.simulate();
             totalFoods+= agent.getNumFoodCaught();
             totalMoves+= environment.getNumMoves();
         }
         averageFoodCaught = (double) totalFoods/numEnvironmentSimulations;
         averageMoves = (double) totalMoves/numEnvironmentSimulations;
+
         fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT;
         return fitness;
     }

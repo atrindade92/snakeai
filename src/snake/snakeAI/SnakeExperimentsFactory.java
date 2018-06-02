@@ -21,9 +21,11 @@ public class SnakeExperimentsFactory extends ExperimentsFactory {
     private Mutation<SnakeIndividual> mutation;
     private SnakeProblem problem;
     private Experiment<SnakeExperimentsFactory, SnakeProblem> experiment;
+    private final String snakeController;
 
-    public SnakeExperimentsFactory(File configFile) throws IOException {
+    public SnakeExperimentsFactory(File configFile, String snakeController) throws IOException {
         super(configFile);
+        this.snakeController = snakeController;
     }
 
     @Override
@@ -67,7 +69,7 @@ public class SnakeExperimentsFactory extends ExperimentsFactory {
         }
 
         //PROBLEM 
-        problem = SnakeProblem.buildProblemFromFile(new File(getParameterValue("Problem file")));
+        problem = SnakeProblem.buildProblemFromFile(new File(getParameterValue("Problem file")),snakeController);
 
         String textualRepresentation = buildTextualExperiment();
 
