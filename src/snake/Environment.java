@@ -48,6 +48,7 @@ public class Environment {
             agent.getCell().setAgent(null);
             agent.cleanTail();
             agent.resetFoodCaught();
+            agent.resetPenaltyValues();
         }
 
         if(food != null) {

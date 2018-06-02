@@ -8,6 +8,7 @@ public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeInd
 
     private double averageFoodCaught = 0f;
     private double averageMoves = 0f;
+    private double averageMovesWithPenalty = 0f;
 
     public SnakeIndividual(SnakeProblem problem, int size) {
         super(problem, size);
@@ -18,13 +19,15 @@ public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeInd
         this.fitness = original.fitness;
         this.averageMoves = original.averageMoves;
         this.averageFoodCaught = original.averageFoodCaught;
+        this.averageMovesWithPenalty = original.averageMovesWithPenalty;
     }
 
     @Override
     public double computeFitness() {
-        final double STEPS_WEIGHT = 1, FOOD_CAUGHT_WEIGHT = 1000.0;
+        final double STEPS_WEIGHT = 1, FOOD_CAUGHT_WEIGHT = 1000.0, PENALTY_WEIGHT = 15.0;
         int totalFoods = 0;
         int totalMoves = 0;
+        int totalMovesWithPenalty = 0;
         final int numEnvironmentSimulations = problem.getNumEvironmentSimulations();
         Environment environment = problem.getEnvironment();
         SnakeAIAgent agent = null;
@@ -34,13 +37,15 @@ public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeInd
             agent.setWeights(genome);
 
             environment.simulate();
-            totalFoods+= agent.getNumFoodCaught();
-            totalMoves+= environment.getNumMoves();
+            totalMovesWithPenalty += agent.getNumOfMovesWithPenalty();
+            totalFoods += agent.getNumFoodCaught();
+            totalMoves += environment.getNumMoves();
         }
         averageFoodCaught = (double) totalFoods/numEnvironmentSimulations;
         averageMoves = (double) totalMoves/numEnvironmentSimulations;
+        averageMovesWithPenalty = (double) totalMovesWithPenalty/numEnvironmentSimulations;
 
-        fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT;
+        fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT - averageMovesWithPenalty * PENALTY_WEIGHT;
         return fitness;
     }
 
@@ -54,6 +59,7 @@ public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeInd
         sb.append("\nfitness: ").append(fitness).append(System.lineSeparator())
             .append("Average Moves: ").append(averageMoves).append(System.lineSeparator())
             .append("Average Food Caught: ").append(averageFoodCaught).append(System.lineSeparator())
+            .append("Average Moves With Penalty: ").append(averageMovesWithPenalty).append(System.lineSeparator())
             .append("genome:");
         for (double gene : genome) {
             sb.append(gene).append(" ");

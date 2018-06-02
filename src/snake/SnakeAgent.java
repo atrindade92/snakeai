@@ -10,7 +10,9 @@ public abstract class SnakeAgent {
     protected Color color;
     protected List<Cell> tail = new ArrayList<>();
     protected int foodCaught = 0;
-    // TODO: isDead??
+    protected int numOfMovesWithPenalty = 0;
+    protected int movesAfterLimit = 0;
+    protected int movesAfterFoodCaught = 0;
 
     public SnakeAgent(Cell cell, Color color) {
         this.cell = cell;
@@ -57,10 +59,13 @@ public abstract class SnakeAgent {
                 lastCell.setTail(new Tail());
                 this.tail.add(0, lastCell);
 
+                this.numOfMovesWithPenalty += this.movesAfterLimit;
+                this.movesAfterLimit = 0;
+                this.movesAfterFoodCaught = 0;
                 this.foodCaught++;
                 environment.placeFood();
                 nextCell.setFood(null);
-                //SE NAO apanhou comida
+            //SE NAO apanhou comida
             } else {
                 if (!this.tail.isEmpty()) {
                     lastCell.setTail(new Tail());
@@ -68,6 +73,7 @@ public abstract class SnakeAgent {
                     this.tail.get(this.tail.size() - 1).setTail(null);
                     this.tail.remove(this.tail.size() - 1);
                 }
+                checkLimit();
             }
             return false;
         } else
@@ -105,8 +111,36 @@ public abstract class SnakeAgent {
         this.foodCaught = 0;
     }
 
+    public void resetPenaltyValues(){
+        this.numOfMovesWithPenalty = 0;
+        this.movesAfterLimit = 0;
+        this.movesAfterFoodCaught = 0;
+    }
+
     public int getNumFoodCaught() {
         return foodCaught;
+    }
+
+    public int getNumOfMovesWithPenalty() {
+        return numOfMovesWithPenalty;
+    }
+
+    private void checkLimit(){
+        if(this.tail.size() < 5 && movesAfterFoodCaught >= 10){
+            this.movesAfterLimit++;
+        }else if (this.tail.size() < 10 && movesAfterFoodCaught >= 22){
+            this.movesAfterLimit++;
+        /*}else if (this.tail.size() < 15 && movesAfterFoodCaught >= 30){
+            this.movesAfterLimit++;
+/*        }else if (this.tail.size() < 20 && movesAfterFoodCaught >= 30){
+            this.movesAfterLimit++;*/
+        }else{
+            /*if(movesAfterFoodCaught >= 55){
+                this.movesAfterLimit++;
+            }*/
+        }
+
+        this.movesAfterFoodCaught++;
     }
 
     protected boolean foodOnN(Cell foodCell){
