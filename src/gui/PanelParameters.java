@@ -38,7 +38,7 @@ public class PanelParameters extends PanelAtributesValue {
     JComboBox comboBoxRecombinationMethods = new JComboBox(recombinationMethods);
     JTextField textFieldProbRecombination = new JTextField(PROB_RECOMBINATION, TEXT_FIELD_LENGHT);
     JTextField textFieldProbMutation = new JTextField(PROB_MUTATION, TEXT_FIELD_LENGHT);
-    String[] controllerTypes = {"One snake", "Homogeneous", "Heterogeneous", "Random", "Ad-Hoc"};
+    String[] controllerTypes = {"One snake", "Homogeneous Snake", "Heterogeneous", "Random", "Ad-Hoc"};
     JComboBox comboBoxControllerTypes = new JComboBox(controllerTypes);
     //TODO - MORE PARAMETERS?
 

@@ -73,7 +73,7 @@ public abstract class SnakeAgent {
                     this.tail.get(this.tail.size() - 1).setTail(null);
                     this.tail.remove(this.tail.size() - 1);
                 }
-                checkLimit();
+                checkLimit(environment);
             }
             return false;
         } else
@@ -125,20 +125,37 @@ public abstract class SnakeAgent {
         return numOfMovesWithPenalty;
     }
 
-    private void checkLimit(){
-        if(this.tail.size() < 5 && movesAfterFoodCaught >= 10){
-            this.movesAfterLimit++;
-        }else if (this.tail.size() < 10 && movesAfterFoodCaught >= 22){
-            this.movesAfterLimit++;
-        /*}else if (this.tail.size() < 15 && movesAfterFoodCaught >= 30){
-            this.movesAfterLimit++;
-/*        }else if (this.tail.size() < 20 && movesAfterFoodCaught >= 30){
-            this.movesAfterLimit++;*/
-        }else{
-            /*if(movesAfterFoodCaught >= 55){
+    private void checkLimit(Environment environment){
+        if(environment.getController().equals("Homogeneous Snake")){
+            if(this.tail.size() < 5 && movesAfterFoodCaught >= 30){
                 this.movesAfterLimit++;
-            }*/
+            }else if (this.tail.size() < 10 && movesAfterFoodCaught >= 50){
+                this.movesAfterLimit++;
+            /*}else if (this.tail.size() < 15 && movesAfterFoodCaught >= 30){
+                this.movesAfterLimit++;
+    /*        }else if (this.tail.size() < 20 && movesAfterFoodCaught >= 30){
+                this.movesAfterLimit++;*/
+            }else{
+                /*if(movesAfterFoodCaught >= 55){
+                    this.movesAfterLimit++;
+                }*/
+            }
+        }else{
+            if(this.tail.size() < 5 && movesAfterFoodCaught >= 10){
+                this.movesAfterLimit++;
+            }else if (this.tail.size() < 10 && movesAfterFoodCaught >= 22){
+                this.movesAfterLimit++;
+            /*}else if (this.tail.size() < 15 && movesAfterFoodCaught >= 30){
+                this.movesAfterLimit++;
+    /*        }else if (this.tail.size() < 20 && movesAfterFoodCaught >= 30){
+                this.movesAfterLimit++;*/
+            }else{
+                /*if(movesAfterFoodCaught >= 55){
+                    this.movesAfterLimit++;
+                }*/
+            }
         }
+
 
         this.movesAfterFoodCaught++;
     }

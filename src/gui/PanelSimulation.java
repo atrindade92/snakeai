@@ -95,7 +95,12 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
                 for (int i = 0; i < environmentSimulations; i++) {
                     environment.initialize(i);
                     if(mainFrame.isAIAgent()) {
-                        ((SnakeAIAgent) environment.getAgent()).setWeights(mainFrame.getBestInRun().getGenome());
+                        ((SnakeAIAgent) environment.getAgent(0)).setWeights(mainFrame.getBestInRun().getGenome());
+
+                        if(mainFrame.getControllerType().equals("HOMOGENEOUS SNAKE")){
+                            ((SnakeAIAgent) environment.getAgent(1)).setWeights(mainFrame.getBestInRun().getGenome());
+                            environment.getAgent(1).act(environment);
+                        }
                     }
                     environmentUpdated();
                     environment.simulate();

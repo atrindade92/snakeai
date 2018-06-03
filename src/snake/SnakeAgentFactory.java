@@ -1,6 +1,8 @@
 package snake;
 
 import exceptions.InvalidAgentException;
+import snake.snakeAI.nn.HomogeneousSnakeAIAgent;
+import snake.snakeAI.nn.OneSnakeAIAgent;
 import snake.snakeAI.nn.SnakeAIAgent;
 import snake.snakeAdhoc.SnakeAdhocAgent;
 import snake.snakeRandom.SnakeRandomAgent;
@@ -28,7 +30,9 @@ public class SnakeAgentFactory {
             case "AD-HOC":
                 return new SnakeAdhocAgent(environment.getCellAtRandomLocation(), agentColor);
             case "ONE SNAKE":
-                return new SnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
+                return new OneSnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
+            case "HOMOGENEOUS SNAKE":
+                return new HomogeneousSnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
             default:
                 throw new InvalidAgentException("Agent name does not exist in the current context.");
         }

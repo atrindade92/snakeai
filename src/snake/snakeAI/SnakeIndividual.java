@@ -33,7 +33,7 @@ public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeInd
         SnakeAIAgent agent = null;
         for (int i = 0; i < numEnvironmentSimulations; i++) {
             environment.initialize(i);
-            agent = (SnakeAIAgent) environment.getAgent();
+            agent = (SnakeAIAgent) environment.getAgent(0);
             agent.setWeights(genome);
 
             environment.simulate();

@@ -8,7 +8,7 @@ public class Environment {
 
     private Random random;
     private final Cell[][] grid;
-    private SnakeAgent agent;
+    private SnakeAgent agent[];
     private Food food;
     private final int maxIterations;
     private String controller;
@@ -23,12 +23,14 @@ public class Environment {
         this.numInputs = numInputs;
         this.numHiddens = numHiddens;
         this.numOutputs = numOutputs;
+        this.agent = new SnakeAgent[2];
     }
 
     public Environment(
             int size,
             int maxIterations) {
 
+        this.agent = new SnakeAgent[2];
         this.maxIterations = maxIterations;
 
         this.grid = new Cell[size][size];
@@ -44,11 +46,18 @@ public class Environment {
 
     public void cleanBoard(){
         numMoves = 0;
-        if(agent != null) {
-            agent.getCell().setAgent(null);
-            agent.cleanTail();
-            agent.resetFoodCaught();
-            agent.resetPenaltyValues();
+        if(agent[0] != null) {
+            agent[0].getCell().setAgent(null);
+            agent[0].cleanTail();
+            agent[0].resetFoodCaught();
+            agent[0].resetPenaltyValues();
+
+            if(this.controller.toUpperCase().equals("HOMOGENEOUS SNAKE")){
+                agent[1].getCell().setAgent(null);
+                agent[1].cleanTail();
+                agent[1].resetFoodCaught();
+                agent[1].resetPenaltyValues();
+            }
         }
 
         if(food != null) {
@@ -65,11 +74,19 @@ public class Environment {
     }
 
     public void placeAgent(){
-        agent.setCell(getCellAtRandomLocation());
+        agent[0].setCell(getCellAtRandomLocation());
+
+        if(this.controller.toUpperCase().equals("HOMOGENEOUS SNAKE")){
+            agent[1].setCell(getCellAtRandomLocation());
+        }
     }
 
     public void createAgent(){
-        this.agent = SnakeAgentFactory.buildSnakeAgent(this.controller, this);
+        this.agent[0] = SnakeAgentFactory.buildSnakeAgent(this.controller, this);
+
+        if(this.controller.toUpperCase().equals("HOMOGENEOUS SNAKE")){
+            this.agent[1] = SnakeAgentFactory.buildSnakeAgent(this.controller, this);
+        }
     }
 
     public void setAgent(String controller){
@@ -78,7 +95,11 @@ public class Environment {
     }
 
     public boolean hasAgent(){
-        return agent != null;
+        return agent[0] != null;
+    }
+
+    public boolean hasTwoAgents(){
+        return agent[0] != null && agent[1] != null;
     }
 
     public void placeFood() {
@@ -94,8 +115,8 @@ public class Environment {
         food = new Food (grid[l][c]);
     }
 
-    public void setAgent(SnakeAgent agent) {
-        this.agent = agent;
+    public void setAgentAt(SnakeAgent agent, int index) {
+        this.agent[index] = agent;
     }
 
     public void simulate() {
@@ -104,7 +125,17 @@ public class Environment {
         for (i = 0; i < maxIterations; i++) {
             if(isAgentStucked)
                 break;
-            isAgentStucked = agent.act(this);
+
+            if(controller.toUpperCase().equals("HOMOGENEOUS SNAKE")){
+                if(i%2 == 0){
+                    isAgentStucked = agent[0].act(this);
+                }else{
+                    isAgentStucked = agent[1].act(this);
+                }
+            }else{
+                isAgentStucked = agent[0].act(this);
+            }
+
             fireUpdatedEnvironment();
         }
        numMoves=i;
@@ -183,8 +214,8 @@ public class Environment {
         return grid[linha][coluna].getColor();
     }
 
-    public SnakeAgent getAgent() {
-        return agent;
+    public SnakeAgent getAgent(int index) {
+        return agent[index];
     }
 
     public Cell getCellAtRandomLocation(){
