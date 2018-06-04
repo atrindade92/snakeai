@@ -13,6 +13,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -92,6 +94,9 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
             @Override
             public Void doInBackground() {
                 int environmentSimulations = mainFrame.getProblem().getNumEvironmentSimulations();
+                double totalFoods = 0;
+                double totalMoves = 0;
+
                 for (int i = 0; i < environmentSimulations; i++) {
                     environment.initialize(i);
                     if(mainFrame.isAIAgent()) {
@@ -104,7 +109,16 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
                     }
                     environmentUpdated();
                     environment.simulate();
+
+                    if(!mainFrame.isAIAgent()){
+                        NumberFormat formatter = new DecimalFormat("#0.00");
+                        totalFoods += environment.getAgent(0).getNumFoodCaught();
+                        totalMoves += environment.getNumMoves();
+                    }
                 }
+
+                mainFrame.changeBestIndividualPanelText("Average Food Caugth: " + totalFoods/environmentSimulations + "\nAverage Moves: " + totalMoves/environmentSimulations);
+
                 return null;
             }
 

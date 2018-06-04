@@ -175,4 +175,13 @@ public abstract class SnakeAgent {
     protected boolean foodOnW(Cell foodCell){
         return (foodCell.getColumn() < this.cell.getColumn());
     }
+
+    public String foodAndMovesInfo(Environment environment){
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nFood Caught: ").append(this.foodCaught).append(System.lineSeparator())
+                .append("Moves: ").append(environment.getNumMoves()).append(System.lineSeparator());
+
+        return sb.toString();
+    }
+
 }

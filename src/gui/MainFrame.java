@@ -177,6 +177,10 @@ public class MainFrame extends JFrame implements GAListener {
         }
     }
 
+    public void changeBestIndividualPanelText(String s){
+        bestIndividualPanel.textArea.setText(s);
+    }
+
     public void jButtonRun_actionPerformed(ActionEvent e) {
         try {
             if (problem == null) {
