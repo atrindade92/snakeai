@@ -84,10 +84,10 @@ public class Environment {
     }
 
     public void createAgent(){
-        this.agent[0] = SnakeAgentFactory.buildSnakeAgent(this.controller, this);
+        this.agent[0] = SnakeAgentFactory.buildSnakeAgent(this.controller, this, 0);
 
         if(this.controller.toUpperCase().equals("HOMOGENEOUS SNAKE")){
-            this.agent[1] = SnakeAgentFactory.buildSnakeAgent(this.controller, this);
+            this.agent[1] = SnakeAgentFactory.buildSnakeAgent(this.controller, this, 1);
         }
     }
 

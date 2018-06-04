@@ -14,7 +14,7 @@ public class SnakeAgentFactory {
 
     private static Environment myEnvironment;
 
-    public static SnakeAgent buildSnakeAgent(String agentType, Environment environment){
+    public static SnakeAgent buildSnakeAgent(String agentType, Environment environment, int agentIndex){
         if(agentType == null)
             throw new InvalidParameterException("Controller cannot be null.");
 
@@ -32,7 +32,7 @@ public class SnakeAgentFactory {
             case "ONE SNAKE":
                 return new OneSnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
             case "HOMOGENEOUS SNAKE":
-                return new HomogeneousSnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
+                return new HomogeneousSnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs(), agentIndex);
             default:
                 throw new InvalidAgentException("Agent name does not exist in the current context.");
         }

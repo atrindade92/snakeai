@@ -6,8 +6,11 @@ import snake.Perception;
 
 public class HomogeneousSnakeAIAgent extends SnakeAIAgent {
 
-    public HomogeneousSnakeAIAgent(Cell cell, int inputLayerSize, int hiddenLayerSize, int outputLayerSize) {
+    private int opponentIndex;
+
+    public HomogeneousSnakeAIAgent(Cell cell, int inputLayerSize, int hiddenLayerSize, int outputLayerSize, int agentIndex) {
         super(cell, inputLayerSize, hiddenLayerSize, outputLayerSize);
+        this.opponentIndex = agentIndex == 0 ? 1 : 0 ;
     }
 
     @Override
