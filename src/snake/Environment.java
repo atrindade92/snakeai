@@ -1,5 +1,7 @@
 package snake;
 
+import snake.snakeAI.SnakeProblem;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
@@ -139,6 +141,10 @@ public class Environment {
             fireUpdatedEnvironment();
         }
        numMoves=i;
+    }
+
+    public boolean isHomogenousSnakeController(){
+        return controller.toUpperCase().equals(SnakeProblem.HOMOGENOUS_SNAKE);
     }
 
     public int getNumInputs() {

@@ -9,7 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SnakeProblem implements Problem<SnakeIndividual> {
-    private static final int NUM_NN_INPUTS = 13;
+    public static final String HOMOGENOUS_SNAKE = "HOMOGENEOUS SNAKE";
+    private static final int NUM_NN_INPUTS_ONE = 13;
+    private static final int NUM_NN_INPUTS_HOMOGENOUS = 17;
     private static final int NUM_NN_OUTPUTS = 4;
     private final int GENOME_SIZE;
 
@@ -29,7 +31,7 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
             String snakeController) {
         this.environmentSize = environmentSize;
         this.maxIterations = maxIterations;
-        this.numInputs = NUM_NN_INPUTS;
+        this.numInputs = (snakeController.toUpperCase().equals(HOMOGENOUS_SNAKE) ? NUM_NN_INPUTS_HOMOGENOUS : NUM_NN_INPUTS_ONE);
         this.numHiddenUnits = numHiddenUnits;
         this.numOutputs = NUM_NN_OUTPUTS;
         this.numEnvironmentRuns = numEnvironmentRuns;
