@@ -27,10 +27,15 @@ public class HomogeneousSnakeAIAgent extends SnakeAIAgent {
         inputs[6]=foodOnS(foodCell) ? 0 : 1;
         inputs[7]=foodOnW(foodCell) ? 0 : 1;
 
-        inputs[8]=northCell != null && !northCell.hasTail() ? 0 : 1;
-        inputs[9]=eastCell != null && !eastCell.hasTail() ? 0 : 1;
-        inputs[10]=southCell != null && !southCell.hasTail() ? 0 : 1;
-        inputs[11]=westCell != null && !westCell.hasTail() ? 0 : 1;
+        inputs[8]=northCell != null && !northCell.hasTail()     ? 0 : 1;
+        inputs[9]=eastCell != null && !eastCell.hasTail()       ? 0 : 1;
+        inputs[10]=southCell != null && !southCell.hasTail()    ? 0 : 1;
+        inputs[11]=westCell != null && !westCell.hasTail()      ? 0 : 1;
+
+        inputs[12]=northCell != null && !northCell.hasAgent()   ? 0 : 1;
+        inputs[13]=eastCell != null && !eastCell.hasAgent()     ? 0 : 1;
+        inputs[14]=southCell != null && !southCell.hasAgent()   ? 0 : 1;
+        inputs[15]=westCell != null && !westCell.hasAgent()     ? 0 : 1;
 
         forwardPropagation();
 

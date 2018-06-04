@@ -30,22 +30,29 @@ public class SnakeIndividual extends RealVectorIndividual<SnakeProblem, SnakeInd
         int totalMovesWithPenalty = 0;
         final int numEnvironmentSimulations = problem.getNumEvironmentSimulations();
         Environment environment = problem.getEnvironment();
-        SnakeAIAgent agent = null;
+        SnakeAIAgent snakeOne = null;
+        SnakeAIAgent snakeTwo = null;
         for (int i = 0; i < numEnvironmentSimulations; i++) {
             environment.initialize(i);
-            agent = (SnakeAIAgent) environment.getAgent(0);
-            agent.setWeights(genome);
+            snakeOne = (SnakeAIAgent) environment.getAgent(0);
+            snakeTwo = (SnakeAIAgent) environment.getAgent(1);
+
+            snakeOne.setWeights(genome);
+            snakeTwo.setWeights(genome);
 
             environment.simulate();
-            totalMovesWithPenalty += agent.getNumOfMovesWithPenalty();
-            totalFoods += agent.getNumFoodCaught();
+            totalMovesWithPenalty += snakeOne.getNumOfMovesWithPenalty();
+            totalFoods += snakeOne.getNumFoodCaught();
             totalMoves += environment.getNumMoves();
         }
         averageFoodCaught = (double) totalFoods/numEnvironmentSimulations;
         averageMoves = (double) totalMoves/numEnvironmentSimulations;
         averageMovesWithPenalty = (double) totalMovesWithPenalty/numEnvironmentSimulations;
 
-        fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT - averageMovesWithPenalty * PENALTY_WEIGHT;
+//        fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT;
+//        if(!environment.isHomogenousSnakeController())
+//            fitness-= averageMovesWithPenalty * PENALTY_WEIGHT;
+        fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT - averageMovesWithPenalty * PENALTY_WEIGHT;;
         return fitness;
     }
 
