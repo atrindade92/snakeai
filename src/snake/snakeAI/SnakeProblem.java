@@ -51,7 +51,10 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
 
     @Override
     public SnakeIndividual getNewIndividual() {
-        return new SnakeIndividual(this, GENOME_SIZE);
+        if(environment.isHomogenousSnakeController())
+            return new SnakeHomogeneousIndividual(this, GENOME_SIZE);
+
+        return new OneSnakeIndividual(this, GENOME_SIZE);
     }
 
     public Environment getEnvironment() {
