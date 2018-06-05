@@ -37,18 +37,16 @@ public class SnakeHomogeneousIndividual extends SnakeIndividual {
             snakeTwo.setWeights(genome);
 
             environment.simulate();
-            totalMovesWithPenalty += snakeOne.getNumOfMovesWithPenalty();
-            totalFoods += snakeOne.getNumFoodCaught();
+            totalMovesWithPenalty += (snakeOne.getNumOfMovesWithPenalty() + snakeTwo.getNumOfMovesWithPenalty());
+            totalFoods += (snakeOne.getNumFoodCaught() + snakeTwo.getNumFoodCaught());
             totalMoves += environment.getNumMoves();
         }
         averageFoodCaught = (double) totalFoods/numEnvironmentSimulations;
         averageMoves = (double) totalMoves/numEnvironmentSimulations;
         averageMovesWithPenalty = (double) totalMovesWithPenalty/numEnvironmentSimulations;
 
-//        fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT;
-//        if(!environment.isHomogenousSnakeController())
-//            fitness-= averageMovesWithPenalty * PENALTY_WEIGHT;
-        fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT - averageMovesWithPenalty * PENALTY_WEIGHT;;
+        fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT - averageMovesWithPenalty * PENALTY_WEIGHT;
+
         return fitness;
     }
 

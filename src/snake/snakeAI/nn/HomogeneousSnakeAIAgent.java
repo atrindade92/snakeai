@@ -13,6 +13,10 @@ public class HomogeneousSnakeAIAgent extends SnakeAIAgent {
         this.opponentIndex = agentIndex == 0 ? 1 : 0 ;
     }
 
+    public int getOpponentIndex() {
+        return opponentIndex;
+    }
+
     @Override
     protected Action decide(Perception perception) {
         final int TRUE = 1;
