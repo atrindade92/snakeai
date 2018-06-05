@@ -124,6 +124,7 @@ public class Environment {
     public void simulate() {
         boolean isAgentStucked = false;
         int i;
+
         for (i = 0; i < maxIterations; i++) {
             if(isAgentStucked)
                 break;
@@ -145,6 +146,14 @@ public class Environment {
 
     public boolean isHomogenousSnakeController(){
         return controller.toUpperCase().equals(SnakeProblem.HOMOGENOUS_SNAKE);
+    }
+
+    public boolean isHeterogeneousSnakeController(){
+        return controller.toUpperCase().equals(SnakeProblem.HETEROUGENEOUS_SNAKE);
+    }
+
+    public boolean isOneSnakeProblem(){
+        return !(isHomogenousSnakeController() || isHeterogeneousSnakeController());
     }
 
     public int getNumInputs() {
