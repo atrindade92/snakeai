@@ -2,6 +2,7 @@ package snake.snakeAI.nn;
 
 import snake.Action;
 import snake.Cell;
+import snake.Environment;
 import snake.Perception;
 
 public class HomogeneousSnakeAIAgent extends SnakeAIAgent {
@@ -56,5 +57,23 @@ public class HomogeneousSnakeAIAgent extends SnakeAIAgent {
             return Action.WEST;
 
         return null;
+    }
+
+    @Override
+    protected void checkLimit(Environment environment) {
+        if (this.tail.size() < 5 && movesAfterFoodCaught >= 30) {
+            this.movesAfterLimit++;
+        } else if (this.tail.size() < 10 && movesAfterFoodCaught >= 40) {
+            this.movesAfterLimit++;
+        /*}else if (this.tail.size() < 15 && movesAfterFoodCaught >= 30){
+            this.movesAfterLimit++;
+/*        }else if (this.tail.size() < 20 && movesAfterFoodCaught >= 30){
+            this.movesAfterLimit++;*/
+        } else {
+            /*if(movesAfterFoodCaught >= 55){
+                this.movesAfterLimit++;
+            }*/
+        }
+        super.checkLimit(environment);
     }
 }

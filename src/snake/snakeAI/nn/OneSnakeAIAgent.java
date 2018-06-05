@@ -2,6 +2,7 @@ package snake.snakeAI.nn;
 
 import snake.Action;
 import snake.Cell;
+import snake.Environment;
 import snake.Perception;
 
 public class OneSnakeAIAgent extends SnakeAIAgent {
@@ -44,5 +45,15 @@ public class OneSnakeAIAgent extends SnakeAIAgent {
             return Action.WEST;
 
         return null;
+    }
+
+    @Override
+    protected void checkLimit(Environment environment) {
+        if(this.tail.size() < 5 && movesAfterFoodCaught >= 10){
+            this.movesAfterLimit++;
+        }else if (this.tail.size() < 10 && movesAfterFoodCaught >= 22) {
+            this.movesAfterLimit++;
+        }
+        super.checkLimit(environment);
     }
 }

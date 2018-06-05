@@ -23,7 +23,7 @@ public class SnakeHomogeneousIndividual extends SnakeIndividual {
 
     @Override
     public double computeFitness() {
-        final double STEPS_WEIGHT = 1, FOOD_CAUGHT_WEIGHT = 1000.0, PENALTY_WEIGHT = 15.0, FOOD_DIFFERENCE = 3, FOOD_PENALTY = 600;
+        final double STEPS_WEIGHT = 1, FOOD_CAUGHT_WEIGHT = 1000.0, PENALTY_WEIGHT = 10.0, FOOD_DIFFERENCE = 3, FOOD_PENALTY = 500;
         int totalFoods = 0;
         int totalMoves = 0;
         int totalMovesWithPenalty = 0;
@@ -46,7 +46,7 @@ public class SnakeHomogeneousIndividual extends SnakeIndividual {
             totalMoves += environment.getNumMoves();
 
             int foodDiff = Math.abs(snakeOne.getNumFoodCaught() - snakeTwo.getNumFoodCaught());
-            totalFoodsWithPenalty += foodDiff > FOOD_DIFFERENCE ? foodDiff : totalMovesWithPenalty;
+            totalFoodsWithPenalty += foodDiff >= FOOD_DIFFERENCE ? foodDiff : totalMovesWithPenalty;
         }
         averageFoodCaught = (double) totalFoods/numEnvironmentSimulations;
         averageMoves = (double) totalMoves/numEnvironmentSimulations;

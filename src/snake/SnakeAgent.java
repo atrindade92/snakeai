@@ -125,38 +125,7 @@ public abstract class SnakeAgent {
         return numOfMovesWithPenalty;
     }
 
-    private void checkLimit(Environment environment){
-        if(environment.getController().equals("Homogeneous Snake")){
-            if(this.tail.size() < 5 && movesAfterFoodCaught >= 30){
-                this.movesAfterLimit++;
-            }else if (this.tail.size() < 10 && movesAfterFoodCaught >= 50){
-                this.movesAfterLimit++;
-            /*}else if (this.tail.size() < 15 && movesAfterFoodCaught >= 30){
-                this.movesAfterLimit++;
-    /*        }else if (this.tail.size() < 20 && movesAfterFoodCaught >= 30){
-                this.movesAfterLimit++;*/
-            }else{
-                /*if(movesAfterFoodCaught >= 55){
-                    this.movesAfterLimit++;
-                }*/
-            }
-        }else{
-            if(this.tail.size() < 5 && movesAfterFoodCaught >= 10){
-                this.movesAfterLimit++;
-            }else if (this.tail.size() < 10 && movesAfterFoodCaught >= 22){
-                this.movesAfterLimit++;
-            /*}else if (this.tail.size() < 15 && movesAfterFoodCaught >= 30){
-                this.movesAfterLimit++;
-    /*        }else if (this.tail.size() < 20 && movesAfterFoodCaught >= 30){
-                this.movesAfterLimit++;*/
-            }else{
-                /*if(movesAfterFoodCaught >= 55){
-                    this.movesAfterLimit++;
-                }*/
-            }
-        }
-
-
+    protected void checkLimit(Environment environment){
         this.movesAfterFoodCaught++;
     }
 
