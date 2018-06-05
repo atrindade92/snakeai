@@ -4,16 +4,38 @@ import snake.Action;
 import snake.Cell;
 import snake.Environment;
 import snake.Perception;
+import snake.snakeAI.utils.Maths;
 
-public class OneSnakeAIAgent extends SnakeAIAgent {
+public class OneSnakeAIAgent2 extends SnakeAIAgent {
 
-    public OneSnakeAIAgent(Cell cell, int inputLayerSize, int hiddenLayerSize, int outputLayerSize) {
+    public OneSnakeAIAgent2(Cell cell, int inputLayerSize, int hiddenLayerSize, int outputLayerSize) {
         super(cell, inputLayerSize, hiddenLayerSize, outputLayerSize);
+    }
+
+    @Override
+    protected void forwardPropagation() {
+        double sum;
+        for (int i = 0; i < hiddenLayerSize; i++) {
+            sum = 0;
+            for (int j = 0; j < inputLayerSize; j++) {
+                sum += inputs[j] * w1[j][i];
+            }
+            hiddenLayerOutput[i] = Maths.sigmoid(sum);
+        }
+
+        for (int i = 0; i < outputLayerSize; i++) {
+            sum = 0;
+            for (int j = 0; j < hiddenLayerSize+1; j++) {
+                sum += hiddenLayerOutput[j] * w2[j][i];
+            }
+            output[i] = (int)sum;
+        }
     }
 
     @Override
     protected Action decide(Perception perception) {
         final int TRUE = 1;
+        final int FALSE = 0;
 
         final Cell northCell = perception.getN(), eastCell = perception.getE(), southCell = perception.getS(),
                 westCell = perception.getW(), foodCell = perception.getF();
@@ -35,13 +57,13 @@ public class OneSnakeAIAgent extends SnakeAIAgent {
 
         forwardPropagation();
 
-        if(output[0] == TRUE)
+        if(output[0] == FALSE && output[1] == FALSE)
             return Action.NORTH;
-        else if(output[1] == TRUE)
+        else if(output[0] == FALSE && output[1] == TRUE)
             return Action.EAST;
-        else if(output[2] == TRUE)
+        else if(output[0] == TRUE && output[1] == FALSE)
             return Action.SOUTH;
-        else if(output[3] == TRUE)
+        else if(output[0] == TRUE && output[1] == TRUE)
             return Action.WEST;
 
         return null;

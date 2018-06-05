@@ -9,11 +9,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SnakeProblem implements Problem<SnakeIndividual> {
+    public static final String ONE_SNAKE_2 = "ONE SNAKE 2";
     public static final String HOMOGENOUS_SNAKE = "HOMOGENEOUS SNAKE";
     public static final String HETEROUGENEOUS_SNAKE = "HETEROUGENEOUS SNAKE";
     private static final int NUM_NN_INPUTS_ONE = 13;
     private static final int NUM_NN_INPUTS_HOMOGENOUS = 17;
     private static final int NUM_NN_OUTPUTS = 4;
+    private static final int NUM_NN_OUTPUTS_SNAKE_ONE_2 = 2;
     private final int GENOME_SIZE;
 
     final private int environmentSize;
@@ -31,9 +33,9 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
             int numEnvironmentRuns,
             String snakeController) {
         this.environmentSize = environmentSize;
-        this.numInputs = (snakeController.toUpperCase().equals(HOMOGENOUS_SNAKE) ? NUM_NN_INPUTS_HOMOGENOUS : NUM_NN_INPUTS_ONE);
+        this.numInputs = isSnakeControllerEquals(snakeController, HOMOGENOUS_SNAKE) ? NUM_NN_INPUTS_HOMOGENOUS : NUM_NN_INPUTS_ONE;
         this.numHiddenUnits = numHiddenUnits;
-        this.numOutputs = NUM_NN_OUTPUTS;
+        this.numOutputs = isSnakeControllerEquals(snakeController, ONE_SNAKE_2) ? NUM_NN_OUTPUTS_SNAKE_ONE_2 : NUM_NN_OUTPUTS;
         this.numEnvironmentRuns = numEnvironmentRuns;
 
         GENOME_SIZE = numInputs * numHiddenUnits + (numHiddenUnits+1)*numOutputs;
@@ -57,6 +59,10 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
             return new SnakeHomogeneousIndividual(this, GENOME_SIZE);
 
         return new OneSnakeIndividual(this, GENOME_SIZE);
+    }
+
+    private boolean isSnakeControllerEquals(String myController, String controller){
+        return myController.toUpperCase().equals(controller);
     }
 
     public Environment getEnvironment() {

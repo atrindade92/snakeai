@@ -6,9 +6,9 @@ import java.awt.Color;
 
 public abstract class SnakeAIAgent extends SnakeAgent {
    
-    final private int inputLayerSize;
-    final private int hiddenLayerSize;
-    final private int outputLayerSize;
+    final protected int inputLayerSize;
+    final protected int hiddenLayerSize;
+    final protected int outputLayerSize;
 
     /**
      * Network inputs array.
@@ -17,15 +17,15 @@ public abstract class SnakeAIAgent extends SnakeAgent {
     /**
      * Hiddden layer weights.
      */
-    final private double[][] w1;
+    final protected double[][] w1;
     /**
      * Output layer weights.
      */
-    final private double[][] w2;
+    final protected double[][] w2;
     /**
      * Hidden layer activation values.
      */
-    final private double[] hiddenLayerOutput;
+    final protected double[] hiddenLayerOutput;
     /**
      * Output layer activation values.
      */

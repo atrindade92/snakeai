@@ -38,7 +38,7 @@ public class PanelParameters extends PanelAtributesValue {
     JComboBox comboBoxRecombinationMethods = new JComboBox(recombinationMethods);
     JTextField textFieldProbRecombination = new JTextField(PROB_RECOMBINATION, TEXT_FIELD_LENGHT);
     JTextField textFieldProbMutation = new JTextField(PROB_MUTATION, TEXT_FIELD_LENGHT);
-    String[] controllerTypes = {"One snake", "Homogeneous Snake", "Heterogeneous", "Random", "Ad-Hoc"};
+    String[] controllerTypes = {"One snake 1", "One snake 2", "Homogeneous Snake", "Heterogeneous", "Random", "Ad-Hoc"};
     JComboBox comboBoxControllerTypes = new JComboBox(controllerTypes);
     //TODO - MORE PARAMETERS?
 
@@ -90,7 +90,9 @@ public class PanelParameters extends PanelAtributesValue {
 
     public void actionPerformedControllerSelection(ActionEvent e){
         final int selectedIndex = comboBoxControllerTypes.getSelectedIndex();
-        final boolean isControllerAdhocOrRandom = !(selectedIndex == 3 || selectedIndex == 4);
+        final boolean isControllerAdhocOrRandom = !(selectedIndex == 4 || selectedIndex == 5);
+
+        //TODO: limpar ao mudar de controlador
 
         toggleInputs(isControllerAdhocOrRandom);
         mainFrame.toggleDataSetButton(isControllerAdhocOrRandom);
@@ -98,7 +100,7 @@ public class PanelParameters extends PanelAtributesValue {
 
     public boolean isAIController(){
         final int selectedIndex = comboBoxControllerTypes.getSelectedIndex();
-        return selectedIndex == 0 || selectedIndex == 1 || selectedIndex == 2;
+        return selectedIndex == 0 || selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3;
     }
 
     private void toggleInputs(boolean value) {

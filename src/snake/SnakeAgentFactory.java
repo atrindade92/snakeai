@@ -2,8 +2,8 @@ package snake;
 
 import exceptions.InvalidAgentException;
 import snake.snakeAI.nn.HomogeneousSnakeAIAgent;
-import snake.snakeAI.nn.OneSnakeAIAgent;
-import snake.snakeAI.nn.SnakeAIAgent;
+import snake.snakeAI.nn.OneSnakeAIAgent1;
+import snake.snakeAI.nn.OneSnakeAIAgent2;
 import snake.snakeAdhoc.SnakeAdhocAgent;
 import snake.snakeRandom.SnakeRandomAgent;
 
@@ -29,8 +29,10 @@ public class SnakeAgentFactory {
                 return new SnakeRandomAgent(environment.getCellAtRandomLocation(), agentColor);
             case "AD-HOC":
                 return new SnakeAdhocAgent(environment.getCellAtRandomLocation(), agentColor);
-            case "ONE SNAKE":
-                return new OneSnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
+            case "ONE SNAKE 1":
+                return new OneSnakeAIAgent1(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
+            case "ONE SNAKE 2":
+                return new OneSnakeAIAgent2(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
             case "HOMOGENEOUS SNAKE":
                 return new HomogeneousSnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs(), agentIndex);
             default:

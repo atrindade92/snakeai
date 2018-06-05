@@ -1,6 +1,6 @@
 Runs: 10
 
-Population size: 50,100, 150
+Population size: 50
 
 Max generations: 1000
 
@@ -8,7 +8,7 @@ Max generations: 1000
 
 Selection: tournament
 
-Tournament size: 10,8,4
+Tournament size: 10
 
 //--------------------------------
 
