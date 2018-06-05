@@ -6,6 +6,8 @@ import snake.snakeAI.nn.SnakeAIAgent;
 
 public class SnakeHomogeneousIndividual extends SnakeIndividual {
 
+    protected double averageFoodsWithPenalty = 0f;
+
     public SnakeHomogeneousIndividual(SnakeProblem problem, int size) {
         super(problem, size);
     }
@@ -16,14 +18,16 @@ public class SnakeHomogeneousIndividual extends SnakeIndividual {
         this.averageMoves = original.averageMoves;
         this.averageFoodCaught = original.averageFoodCaught;
         this.averageMovesWithPenalty = original.averageMovesWithPenalty;
+        this.averageFoodsWithPenalty = original.averageFoodsWithPenalty;
     }
 
     @Override
     public double computeFitness() {
-        final double STEPS_WEIGHT = 1, FOOD_CAUGHT_WEIGHT = 1000.0, PENALTY_WEIGHT = 15.0;
+        final double STEPS_WEIGHT = 1, FOOD_CAUGHT_WEIGHT = 1000.0, PENALTY_WEIGHT = 15.0, FOOD_DIFFERENCE = 3, FOOD_PENALTY = 600;
         int totalFoods = 0;
         int totalMoves = 0;
         int totalMovesWithPenalty = 0;
+        int totalFoodsWithPenalty = 0;
         final int numEnvironmentSimulations = problem.getNumEvironmentSimulations();
         Environment environment = problem.getEnvironment();
         SnakeAIAgent snakeOne = null;
@@ -40,12 +44,16 @@ public class SnakeHomogeneousIndividual extends SnakeIndividual {
             totalMovesWithPenalty += (snakeOne.getNumOfMovesWithPenalty() + snakeTwo.getNumOfMovesWithPenalty());
             totalFoods += (snakeOne.getNumFoodCaught() + snakeTwo.getNumFoodCaught());
             totalMoves += environment.getNumMoves();
+
+            int foodDiff = Math.abs(snakeOne.getNumFoodCaught() - snakeTwo.getNumFoodCaught());
+            totalFoodsWithPenalty += foodDiff > FOOD_DIFFERENCE ? foodDiff : totalMovesWithPenalty;
         }
         averageFoodCaught = (double) totalFoods/numEnvironmentSimulations;
         averageMoves = (double) totalMoves/numEnvironmentSimulations;
         averageMovesWithPenalty = (double) totalMovesWithPenalty/numEnvironmentSimulations;
-
-        fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT - averageMovesWithPenalty * PENALTY_WEIGHT;
+        averageFoodsWithPenalty = (double) totalFoodsWithPenalty/numEnvironmentSimulations;
+        fitness = averageMoves * STEPS_WEIGHT + averageFoodCaught * FOOD_CAUGHT_WEIGHT -
+                averageMovesWithPenalty * PENALTY_WEIGHT - averageFoodsWithPenalty * FOOD_PENALTY;
 
         return fitness;
     }
