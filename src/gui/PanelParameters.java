@@ -20,11 +20,11 @@ public class PanelParameters extends PanelAtributesValue {
 
     // TODO MODIFY TO CHANGE THE DEFAULT PARAMETER VALUES
     public static final String SEED = "1";
-    public static final String POPULATION_SIZE = "200";
+    public static final String POPULATION_SIZE = "50";
     public static final String GENERATIONS = "1000";
-    public static final String TOURNAMENT_SIZE = "4";
-    public static final String PROB_RECOMBINATION = "0.7";
-    public static final String PROB_MUTATION = "0.7";
+    public static final String TOURNAMENT_SIZE = "10";
+    public static final String PROB_RECOMBINATION = "0.85";
+    public static final String PROB_MUTATION = "0.01";
 
     private MainFrame mainFrame;
 
@@ -34,13 +34,14 @@ public class PanelParameters extends PanelAtributesValue {
     String[] selectionMethods = {"Tournament", "Roulette"};
     JComboBox comboBoxSelectionMethods = new JComboBox(selectionMethods);
     JTextField textFieldTournamentSize = new JTextField(TOURNAMENT_SIZE, TEXT_FIELD_LENGHT);
-    String[] recombinationMethods = {"One cut", "Two cuts", "Uniform"};
+    String[] recombinationMethods = {"One cut", "Two cuts", "Uniform", "Arithmetical"};
     JComboBox comboBoxRecombinationMethods = new JComboBox(recombinationMethods);
     JTextField textFieldProbRecombination = new JTextField(PROB_RECOMBINATION, TEXT_FIELD_LENGHT);
+    String[] mutationMethods = {"Uniform", "Swap"};
+    JComboBox comboBoxMutationMethods = new JComboBox(mutationMethods);
     JTextField textFieldProbMutation = new JTextField(PROB_MUTATION, TEXT_FIELD_LENGHT);
     String[] controllerTypes = {"One snake 1", "One snake 2", "Homogeneous Snake", "Heterougeneous Snake", "Random", "Ad-Hoc"};
     JComboBox comboBoxControllerTypes = new JComboBox(controllerTypes);
-    //TODO - MORE PARAMETERS?
 
     public PanelParameters(MainFrame mainFrame) {
         title = "Genetic algorithm parameters";
@@ -77,10 +78,12 @@ public class PanelParameters extends PanelAtributesValue {
         labels.add(new JLabel("Recombination prob.: "));
         valueComponents.add(textFieldProbRecombination);
 
+        labels.add(new JLabel("Mutation method: "));
+        valueComponents.add(comboBoxMutationMethods);
+
         labels.add(new JLabel("Mutation prob.: "));
         valueComponents.add(textFieldProbMutation);
 
-        //TODO - MORE PARAMETERS?
         configure();
     }
 
@@ -144,14 +147,21 @@ public class PanelParameters extends PanelAtributesValue {
                 return new RecombinationTwoCuts<>(recombinationProb);
             case 2:
                 return new RecombinationUniform<>(recombinationProb);
+            case 3:
+                return new RecombinationArithmetical<>(recombinationProb);
         }
         return null;
     }
 
     public Mutation<SnakeIndividual> getMutationMethod() {
         double mutationProbability = Double.parseDouble(textFieldProbMutation.getText());
-        //TODO
-        return new MutationUniform<>(mutationProbability/*TODO?*/);
+        switch (comboBoxMutationMethods.getSelectedIndex()) {
+            case 0:
+                return new MutationUniform<>(mutationProbability);
+            case 1:
+                return new MutationSwap<>(mutationProbability);
+        }
+        return null;
     }
 
     public String getControllerType() {
