@@ -59,6 +59,9 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
         if(environment.isHomogenousSnakeController())
             return new SnakeHomogeneousIndividual(this, GENOME_SIZE);
 
+        if(environment.isHeterogeneousSnakeController())
+            return new SnakeHeterogeneousIndividual(this, GENOME_SIZE);
+
         return new OneSnakeIndividual(this, GENOME_SIZE);
     }
 

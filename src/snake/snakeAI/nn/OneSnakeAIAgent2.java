@@ -28,7 +28,7 @@ public class OneSnakeAIAgent2 extends SnakeAIAgent {
             for (int j = 0; j < hiddenLayerSize+1; j++) {
                 sum += hiddenLayerOutput[j] * w2[j][i];
             }
-            output[i] = (int)sum;
+            output[i] = (sum <= 0f) ? 0 : 1;
         }
     }
 
