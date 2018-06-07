@@ -2,11 +2,11 @@ package snake.snakeAI.nn;
 
 import snake.*;
 
-public class HeterogeneousSnakeAIAgent extends SnakeAIAgent{
+public class HeterogeneousSnakeAIAgent1 extends SnakeAIAgent{
 
     private int opponentIndex;
 
-    public HeterogeneousSnakeAIAgent(Cell cell, int inputLayerSize, int hiddenLayerSize, int outputLayerSize, int agentIndex) {
+    public HeterogeneousSnakeAIAgent1(Cell cell, int inputLayerSize, int hiddenLayerSize, int outputLayerSize, int agentIndex) {
         super(cell, inputLayerSize, hiddenLayerSize, outputLayerSize);
         this.opponentIndex = agentIndex == 0 ? 1 : 0 ;
     }
