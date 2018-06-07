@@ -33,7 +33,8 @@ public class SnakeProblem implements Problem<SnakeIndividual> {
             int numEnvironmentRuns,
             String snakeController) {
         this.environmentSize = environmentSize;
-        this.numInputs = isSnakeControllerEquals(snakeController, HOMOGENOUS_SNAKE) ? NUM_NN_INPUTS_HOMOGENOUS : NUM_NN_INPUTS_ONE;
+        this.numInputs = isSnakeControllerEquals(snakeController, HOMOGENOUS_SNAKE) || isSnakeControllerEquals(snakeController, HETEROUGENEOUS_SNAKE)
+                ? NUM_NN_INPUTS_HOMOGENOUS : NUM_NN_INPUTS_ONE;
         this.numHiddenUnits = numHiddenUnits;
         this.numOutputs = isSnakeControllerEquals(snakeController, ONE_SNAKE_2) ? NUM_NN_OUTPUTS_SNAKE_ONE_2 : NUM_NN_OUTPUTS;
         this.numEnvironmentRuns = numEnvironmentRuns;

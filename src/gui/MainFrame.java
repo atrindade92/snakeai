@@ -331,6 +331,10 @@ public class MainFrame extends JFrame implements GAListener {
     public boolean isAIAgent(){
         return panelParameters.isAIController();
     }
+
+    public boolean hasTwoAgents(){
+        return panelParameters.hasTwoAgents();
+    }
 }
 
 class PanelTextArea extends JPanel {

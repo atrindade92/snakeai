@@ -145,12 +145,21 @@ public abstract class SnakeAgent {
         return (foodCell.getColumn() < this.cell.getColumn());
     }
 
-    public String foodAndMovesInfo(Environment environment){
-        StringBuilder sb = new StringBuilder();
-        sb.append("\nFood Caught: ").append(this.foodCaught).append(System.lineSeparator())
-                .append("Moves: ").append(environment.getNumMoves()).append(System.lineSeparator());
 
-        return sb.toString();
+    protected boolean opponentOnN(Cell opponentCell){
+        return (opponentCell.getLine() < this.cell.getLine());
+    }
+
+    protected boolean opponentOnE(Cell opponentCell){
+        return (opponentCell.getColumn() > this.cell.getColumn());
+    }
+
+    protected boolean opponentOnS(Cell opponentCell){
+        return (opponentCell.getLine() > this.cell.getLine());
+    }
+
+    protected boolean opponentOnW(Cell opponentCell){
+        return (opponentCell.getColumn() < this.cell.getColumn());
     }
 
 }

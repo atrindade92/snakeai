@@ -54,7 +54,7 @@ public class Environment {
             agent[0].resetFoodCaught();
             agent[0].resetPenaltyValues();
 
-            if(this.controller.toUpperCase().equals("HOMOGENEOUS SNAKE")){
+            if(!isOneSnakeProblem()){
                 agent[1].getCell().setAgent(null);
                 agent[1].cleanTail();
                 agent[1].resetFoodCaught();
@@ -78,7 +78,7 @@ public class Environment {
     public void placeAgent(){
         agent[0].setCell(getCellAtRandomLocation());
 
-        if(this.controller.toUpperCase().equals("HOMOGENEOUS SNAKE")){
+        if(!isOneSnakeProblem()){
             agent[1].setCell(getCellAtRandomLocation());
         }
     }
@@ -86,7 +86,7 @@ public class Environment {
     public void createAgent(){
         this.agent[0] = SnakeAgentFactory.buildSnakeAgent(this.controller, this, 0);
 
-        if(this.controller.toUpperCase().equals("HOMOGENEOUS SNAKE")){
+        if(!isOneSnakeProblem()){
             this.agent[1] = SnakeAgentFactory.buildSnakeAgent(this.controller, this, 1);
         }
     }
@@ -129,7 +129,7 @@ public class Environment {
             if(isAgentStucked)
                 break;
 
-            if(controller.toUpperCase().equals("HOMOGENEOUS SNAKE")){
+            if(!isOneSnakeProblem()){
                 if(i%2 == 0){
                     isAgentStucked = agent[0].act(this);
                 }else{

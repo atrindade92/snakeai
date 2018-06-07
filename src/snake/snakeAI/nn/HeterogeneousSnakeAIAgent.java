@@ -2,11 +2,11 @@ package snake.snakeAI.nn;
 
 import snake.*;
 
-public class HomogeneousSnakeAIAgent extends SnakeAIAgent {
+public class HeterogeneousSnakeAIAgent extends SnakeAIAgent{
 
     private int opponentIndex;
 
-    public HomogeneousSnakeAIAgent(Cell cell, int inputLayerSize, int hiddenLayerSize, int outputLayerSize, int agentIndex) {
+    public HeterogeneousSnakeAIAgent(Cell cell, int inputLayerSize, int hiddenLayerSize, int outputLayerSize, int agentIndex) {
         super(cell, inputLayerSize, hiddenLayerSize, outputLayerSize);
         this.opponentIndex = agentIndex == 0 ? 1 : 0 ;
     }
@@ -16,11 +16,26 @@ public class HomogeneousSnakeAIAgent extends SnakeAIAgent {
     }
 
     @Override
+    protected Perception buildPerception(Environment environment) {
+        return new PerceptionWithOpponent(
+                environment.getNorthCell(cell),
+                environment.getSouthCell(cell),
+                environment.getEastCell(cell),
+                environment.getWestCell(cell),
+                environment.getFoodCell(),
+                (environment.getAgent(this.opponentIndex) == null ? null : environment.getAgent(this.opponentIndex).getCell()));
+    }
+
+    @Override
     protected Action decide(Perception perception) {
         final int TRUE = 1;
 
-        final Cell northCell = perception.getN(), eastCell = perception.getE(), southCell = perception.getS(),
-                westCell = perception.getW(), foodCell = perception.getF();
+        final Cell  northCell = perception.getN(),
+                    eastCell = perception.getE(),
+                    southCell = perception.getS(),
+                    westCell = perception.getW(),
+                    foodCell = perception.getF(),
+                    opponentCell = ((PerceptionWithOpponent) perception).getOpponent();
 
         inputs[0]=northCell != null ? 0 : 1;
         inputs[1]=eastCell != null ? 0 : 1;
@@ -37,10 +52,10 @@ public class HomogeneousSnakeAIAgent extends SnakeAIAgent {
         inputs[10]=southCell != null && !southCell.hasTail()    ? 0 : 1;
         inputs[11]=westCell != null && !westCell.hasTail()      ? 0 : 1;
 
-        inputs[12]=northCell != null && !northCell.hasAgent()   ? 0 : 1;
-        inputs[13]=eastCell != null && !eastCell.hasAgent()     ? 0 : 1;
-        inputs[14]=southCell != null && !southCell.hasAgent()   ? 0 : 1;
-        inputs[15]=westCell != null && !westCell.hasAgent()     ? 0 : 1;
+        inputs[12]=opponentCell != null && opponentOnN(opponentCell) ? 0 : 1;
+        inputs[13]=opponentCell != null && opponentOnE(opponentCell) ? 0 : 1;
+        inputs[14]=opponentCell != null && opponentOnS(opponentCell) ? 0 : 1;
+        inputs[15]=opponentCell != null && opponentOnW(opponentCell) ? 0 : 1;
 
         forwardPropagation();
 

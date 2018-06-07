@@ -38,7 +38,7 @@ public class PanelParameters extends PanelAtributesValue {
     JComboBox comboBoxRecombinationMethods = new JComboBox(recombinationMethods);
     JTextField textFieldProbRecombination = new JTextField(PROB_RECOMBINATION, TEXT_FIELD_LENGHT);
     JTextField textFieldProbMutation = new JTextField(PROB_MUTATION, TEXT_FIELD_LENGHT);
-    String[] controllerTypes = {"One snake 1", "One snake 2", "Homogeneous Snake", "Heterogeneous", "Random", "Ad-Hoc"};
+    String[] controllerTypes = {"One snake 1", "One snake 2", "Homogeneous Snake", "Heterougeneous Snake", "Random", "Ad-Hoc"};
     JComboBox comboBoxControllerTypes = new JComboBox(controllerTypes);
     //TODO - MORE PARAMETERS?
 
@@ -101,6 +101,11 @@ public class PanelParameters extends PanelAtributesValue {
     public boolean isAIController(){
         final int selectedIndex = comboBoxControllerTypes.getSelectedIndex();
         return selectedIndex == 0 || selectedIndex == 1 || selectedIndex == 2 || selectedIndex == 3;
+    }
+
+    public boolean hasTwoAgents(){
+        final int selectedIndex = comboBoxControllerTypes.getSelectedIndex();
+        return selectedIndex == 2 || selectedIndex == 3;
     }
 
     private void toggleInputs(boolean value) {
