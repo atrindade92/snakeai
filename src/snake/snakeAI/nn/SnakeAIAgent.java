@@ -5,7 +5,10 @@ import snake.snakeAI.utils.*;
 import java.awt.Color;
 
 public abstract class SnakeAIAgent extends SnakeAgent {
-   
+
+    final protected int TRUE = 1;
+    final protected int FALSE = 0;
+
     final protected int inputLayerSize;
     final protected int hiddenLayerSize;
     final protected int outputLayerSize;

@@ -35,9 +35,10 @@ public class SnakeAgentFactory {
                 return new HomogeneousSnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs(), agentIndex);
             case "HETEROUGENEOUS SNAKE":
                 if(agentIndex == 0){
-                    return new HeterogeneousSnakeAIAgent1(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs(), agentIndex);
+                    return new HeterogeneousSnakeAIAgent(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs(), agentIndex);
                 }else{
-                    return new HeterogeneousSnakeAIAgent2(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs(), agentIndex);
+//                    return new HeterogeneousSnakeAIAgent2(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), 2, agentIndex);
+                    return new OneSnakeAIAgent1(environment.getCellAtRandomLocation(), environment.getNumInputs(), environment.getNumHiddens(), environment.getNumOutputs());
                 }
             default:
                 throw new InvalidAgentException("Agent name does not exist in the current context.");

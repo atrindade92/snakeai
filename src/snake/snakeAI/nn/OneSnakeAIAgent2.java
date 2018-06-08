@@ -34,9 +34,6 @@ public class OneSnakeAIAgent2 extends SnakeAIAgent {
 
     @Override
     protected Action decide(Perception perception) {
-        final int TRUE = 1;
-        final int FALSE = 0;
-
         final Cell northCell = perception.getN(), eastCell = perception.getE(), southCell = perception.getS(),
                 westCell = perception.getW(), foodCell = perception.getF();
 
