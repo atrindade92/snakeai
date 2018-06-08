@@ -18,7 +18,6 @@ public class PanelParameters extends PanelAtributesValue {
 
     public static final int TEXT_FIELD_LENGHT = 7;
 
-    // TODO MODIFY TO CHANGE THE DEFAULT PARAMETER VALUES
     public static final String SEED = "1";
     public static final String POPULATION_SIZE = "50";
     public static final String GENERATIONS = "1000";
