@@ -1,5 +1,7 @@
 package snake.snakeAI.ga;
 
+import java.util.Objects;
+
 public abstract class Individual<P extends Problem, I extends Individual> implements Comparable<I>{
 
     protected double fitness;
@@ -26,4 +28,13 @@ public abstract class Individual<P extends Problem, I extends Individual> implem
 
     @Override
     public abstract I clone();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Individual<?, ?> that = (Individual<?, ?>) o;
+        return Double.compare(that.fitness, fitness) == 0 &&
+                Objects.equals(problem, that.problem);
+    }
 }

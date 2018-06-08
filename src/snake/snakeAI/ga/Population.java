@@ -7,6 +7,7 @@ public class Population<I extends Individual, P extends Problem<I>> {
 
     private final List<I> individuals;
     private I best;
+    private I worst;
 
     public Population(int size) {
         individuals = new ArrayList<>(size);
@@ -21,10 +22,14 @@ public class Population<I extends Individual, P extends Problem<I>> {
 
     public I evaluate() {
         best = getIndividual(0);
+        worst = getIndividual(0);
         for (I individual : individuals) {
             individual.computeFitness();
             if (individual.compareTo(best) > 0) {
                 best = individual;
+            }
+            if(individual.compareTo(worst) < 0){
+                worst = individual;
             }
         }
         return best;
@@ -44,6 +49,12 @@ public class Population<I extends Individual, P extends Problem<I>> {
 
     public I getIndividual(int index) {
         return individuals.get(index);
+    }
+
+    public void addBestIndividual(I best){
+        if(best.equals(worst))
+            return;
+        individuals.set(individuals.indexOf(worst), best);
     }
 
     public I getBest() {

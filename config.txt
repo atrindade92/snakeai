@@ -8,13 +8,13 @@ Max generations: 1000
 
 Selection: tournament
 
-Tournament size: 2,5,6,8,10
+Tournament size: 10
 
 //--------------------------------
 
-Recombination: one_cut
+Recombination: two_cuts
 
-Recombination probability: 0.85
+Recombination probability: 0.25,0.50,0.6,0.75,0.8,0.9,0.95
 
 //--------------------------------
 

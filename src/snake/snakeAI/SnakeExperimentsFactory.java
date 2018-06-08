@@ -55,13 +55,22 @@ public class SnakeExperimentsFactory extends ExperimentsFactory {
                 break;
             case "uniform":
                 recombination = new RecombinationUniform<>(recombinationProbability);
+                break;
+            case "arithmetical":
+                recombination = new RecombinationArithmetical<>(recombinationProbability);
+
         }
 
 
         //MUTATION
         double mutationProbability = Double.parseDouble(getParameterValue("Mutation probability"));
-        if (getParameterValue("Mutation").equals("uniform_distribution")) {
-            mutation = new MutationUniform<>(mutationProbability);
+        switch(getParameterValue("Mutation")){
+            case "uniform_distribution":
+                mutation = new MutationUniform<>(mutationProbability);
+                break;
+            case "swap":
+                mutation = new MutationSwap<>(mutationProbability);
+                break;
         }
 
         //PROBLEM 

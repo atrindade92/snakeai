@@ -49,6 +49,7 @@ public class GeneticAlgorithm<I extends Individual, P extends Problem<I>> {
             
             population = generateNewPopulation(population, populationAux);
             I bestInGen = population.evaluate();
+            population.addBestIndividual(bestInRun);
             if (bestInGen.compareTo(bestInRun) > 0) {
                 bestInRun = (I) bestInGen.clone();
             }
@@ -66,7 +67,10 @@ public class GeneticAlgorithm<I extends Individual, P extends Problem<I>> {
     private void recombination(Population<I, P> population) {
         for (int i = 0; i < populationSize; i += 2) {
             if (random.nextDouble() < recombination.getProbability()) {
-                recombination.run(population.getIndividual(i), population.getIndividual(i + 1));
+                if(i == populationSize-1)
+                    recombination.run(population.getIndividual(i), population.getIndividual(i - 1));
+                else
+                    recombination.run(population.getIndividual(i), population.getIndividual(i + 1));
             }
         }
     }
