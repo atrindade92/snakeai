@@ -152,6 +152,8 @@ public class MainFrame extends JFrame implements GAListener {
 
     public void toggleDataSetButton(boolean state){
         buttonDataSet.setEnabled(state);
+        buttonRun.setEnabled(false);
+        buttonExperiments.setEnabled(state);
     }
 
     public SnakeIndividual getBestInRun() {

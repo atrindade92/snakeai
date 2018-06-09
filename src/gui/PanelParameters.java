@@ -94,8 +94,6 @@ public class PanelParameters extends PanelAtributesValue {
         final int selectedIndex = comboBoxControllerTypes.getSelectedIndex();
         final boolean isControllerAdhocOrRandom = !(selectedIndex == 4 || selectedIndex == 5);
 
-        //TODO: limpar ao mudar de controlador
-
         toggleInputs(isControllerAdhocOrRandom);
         mainFrame.toggleDataSetButton(isControllerAdhocOrRandom);
     }
@@ -119,6 +117,7 @@ public class PanelParameters extends PanelAtributesValue {
         comboBoxRecombinationMethods.setEnabled(value);
         textFieldProbRecombination.setEnabled(value);
         textFieldProbMutation.setEnabled(value);
+        comboBoxMutationMethods.setEnabled(value);
     }
 
     public SelectionMethod<SnakeIndividual, SnakeProblem> getSelectionMethod() {

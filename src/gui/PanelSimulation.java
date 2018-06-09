@@ -73,6 +73,7 @@ public class PanelSimulation extends JPanel implements EnvironmentListener {
 
         environment = problem.getEnvironment();
         environment.addEnvironmentListener(this);
+        environment.cleanBoard();
 
 //        if(environment.hasAgent())
 //            environment.cleanBoard();

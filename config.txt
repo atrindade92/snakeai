@@ -1,24 +1,24 @@
-Runs: 3
+Runs: 10
 
-Population size: 100
+Population size: 75
 
 Max generations: 1000
 
 //--------------------------------
 
-Selection: tournament
+Selection: roullette
 
-Tournament size: 10
-
-//--------------------------------
-
-Recombination: two_cuts
-
-Recombination probability: 0.25,0.50,0.6,0.75,0.8,0.9,0.95
+Tournament size: 5
 
 //--------------------------------
 
-Mutation: uniform_distribution
+Recombination: one_cut
+
+Recombination probability: 0.75
+
+//--------------------------------
+
+Mutation: swap
 
 Mutation probability: 0.01
 
